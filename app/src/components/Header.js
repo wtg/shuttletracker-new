@@ -27,14 +27,8 @@ function Header() {
             </div>
             { isOpen && (
                 <nav className='nav'>
-                    <ul>
-                        <li>
-                            <Link to="/">Live Location</Link>
-                        </li>
-                        <li>
-                            <Link to="/schedule">Schedule</Link>
-                        </li>
-                    </ul>
+                    <Link to="/">Live Location</Link>
+                    <Link to="/schedule">Schedule</Link>
                 </nav>
             )}
         </header>
