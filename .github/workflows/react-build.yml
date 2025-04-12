@@ -1,0 +1,39 @@
+name: Build React and Push to build
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-react:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install and build React
+        run: |
+          cd client
+          npm install
+          npm run build
+
+      - name: Commit React build to production branch
+        run: |
+          mkdir -p temp-build
+          cp -r client/build/* temp-build/
+
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+
+          git checkout --orphan build
+          git rm -rf .
+          cp -r temp-build/* .
+          git add .
+          git commit -m "React build"
+          git push -f origin build
