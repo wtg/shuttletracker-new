@@ -8,7 +8,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy server app and React build output
 COPY server/ ./server/
-COPY client/build/ ./server/static/
+COPY client/dist/ ./server/static/
 
 # Set environment variable for Flask (production mode)
 ENV APP_ENV=production
