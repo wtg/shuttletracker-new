@@ -9,7 +9,6 @@ import LiveLocation from './pages/LiveLocation';
 import Schedule from './pages/Schedule';
 
 function App() {
-
   return (
     <Router>
       <div className="App">
@@ -20,7 +19,7 @@ function App() {
         </Routes>
       </div>
     </Router>
-  )
+  );
 }
 
 export default App;
