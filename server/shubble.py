@@ -2,8 +2,8 @@ from flask import Flask, request, send_from_directory
 from pathlib import Path
 import os
 
-debug = os.environ.get('FLASK_DEBUG', 'false').lower() == 'true'
-port = int(os.environ.get('FLASK_PORT', 6000))
+debug = os.environ.get('FLASK_DEBUG', 'true').lower() == 'true'
+port = int(os.environ.get('FLASK_PORT', 3001))
 host = os.environ.get('FLASK_HOST', '0.0.0.0')
 
 app = Flask(
