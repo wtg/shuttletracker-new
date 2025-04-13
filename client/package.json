@@ -41,7 +41,6 @@
     ]
   },
   "overrides": {
-    "nth-check": "$nth-check",
-    "postcss": "$postcss"
+    "nth-check": "2.1.1"
   }
 }
