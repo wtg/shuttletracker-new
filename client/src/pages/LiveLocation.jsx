@@ -53,7 +53,7 @@ export default function LiveLocation() {
     return (
         <div>
             <h1>Live Location</h1>
-            {location ? (
+            {location && location.length > 0 ? (
                 <div>
                     <h2>Current Location:</h2>
                     <p>Latitude: {location.data[0].gps.latitude}</p>

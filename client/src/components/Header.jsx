@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 import '../styles/Header.css';
 import { LuMenu } from "react-icons/lu";
 
-function Header() {
+export default function Header() {
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -33,6 +33,4 @@ function Header() {
             )}
         </header>
     );
-}
-
-export default Header;
+};

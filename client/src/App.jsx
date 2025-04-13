@@ -1,12 +1,12 @@
-import './App.css';
-import Header from './components/Header';
-import LiveLocation from './pages/LiveLocation';
-import Schedule from './pages/Schedule';
 import {
   BrowserRouter as Router,
   Routes,
   Route,
 } from 'react-router';
+import './App.css';
+import Header from './components/Header';
+import LiveLocation from './pages/LiveLocation';
+import Schedule from './pages/Schedule';
 
 function App() {
 
@@ -19,8 +19,8 @@ function App() {
           <Route path='/schedule' element={ <Schedule /> } />
         </Routes>
       </div>
-  </Router>
+    </Router>
   )
 }
 
-export default App
+export default App;

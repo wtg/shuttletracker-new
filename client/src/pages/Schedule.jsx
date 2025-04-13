@@ -3,7 +3,7 @@ import React, {
     useEffect,
 } from 'react';
 
-function LiveLocation() {
+export default function LiveLocation() {
 
     /*
     // https://developers.samsara.com/reference/getvehiclestatsfeed
@@ -67,5 +67,3 @@ function LiveLocation() {
         </div>
     )
 }
-
-export default LiveLocation;
