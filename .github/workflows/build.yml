@@ -40,7 +40,7 @@ jobs:
 
           cd prod-content
           git init
-          git remote add origin https://github.com/${{ github.repository }}.git
+          git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git checkout -b production
           git add .
           git commit -m "Build React and prepare for production"
