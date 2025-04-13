@@ -15,8 +15,8 @@ function App() {
       <div className="App">
         <Header />
         <Routes>
-          <Route path='/' element={ LiveLocation } />
-          <Route path='/schedule' element={ Schedule } />
+          <Route path='/' element={ <LiveLocation /> } />
+          <Route path='/schedule' element={ <Schedule /> } />
         </Routes>
       </div>
     </Router>
