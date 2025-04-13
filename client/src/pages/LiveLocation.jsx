@@ -3,7 +3,7 @@ import React, {
     useEffect,
 } from 'react';
 
-function LiveLocation() {
+export default function LiveLocation() {
 
     /*
     // https://developers.samsara.com/reference/getvehiclestatsfeed
@@ -53,7 +53,7 @@ function LiveLocation() {
     return (
         <div>
             <h1>Live Location</h1>
-            {location ? (
+            {location && location.length > 0 ? (
                 <div>
                     <h2>Current Location:</h2>
                     <p>Latitude: {location.data[0].gps.latitude}</p>
@@ -67,5 +67,3 @@ function LiveLocation() {
         </div>
     )
 }
-
-export default LiveLocation;
