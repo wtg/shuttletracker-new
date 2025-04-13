@@ -20,36 +20,28 @@ jobs:
       - name: Install dependencies and build React
         run: |
           cd client
-          npm install
+          npm ci
           npm run build
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
 
       - name: Build Docker image
         run: |
           docker build -t flask-react-app .
 
-      - name: Commit React build and Dockerfile to production branch
+      - name: Commit React build + app to production branch
         run: |
-          mkdir -p temp-build
-          cp -r client/build/* temp-build/
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
 
-          # Set git config for committing
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
+          # Create a temp directory for the production branch
+          mkdir prod-content
+          cp -r client/build prod-content/client-build
+          cp -r server prod-content/server       # Assuming Flask app is in server/
+          cp Dockerfile prod-content/
 
-          # Checkout production branch, create if it doesn't exist
-          git checkout --orphan production || git checkout production
-
-          # Remove any old files and copy new build
-          git rm -rf .
-          cp -r temp-build/* .
-          cp -r Dockerfile ./ # Include Dockerfile in production branch
-
-          # Commit the changes (React build and Docker)
+          cd prod-content
+          git init
+          git remote add origin https://github.com/${{ github.repository }}.git
+          git checkout -b production
           git add .
-          git commit -m "Add React build and Docker image"
-
-          # Push changes to production branch
+          git commit -m "Build React and prepare for production"
           git push -f origin production
