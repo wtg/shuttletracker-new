@@ -34,7 +34,7 @@ jobs:
 
           # Create a temp directory for the production branch
           mkdir prod-content
-          cp -r client/build prod-content/client-build
+          cp -r client/dist prod-content/client-dist
           cp -r server prod-content/server       # Assuming Flask app is in server/
           cp Dockerfile prod-content/
 
