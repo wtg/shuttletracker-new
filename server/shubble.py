@@ -2,13 +2,14 @@ from flask import Flask, request, send_from_directory
 from pathlib import Path
 import os
 
-debug = os.environ.get('FLASK_DEBUG', 'true').lower() == 'true'
+flask_debug = os.environ.get('FLASK_DEBUG', 'true').lower() == 'true'
+production = os.environ.get('FLASK_ENV', 'production').lower() == 'production'
 port = int(os.environ.get('FLASK_PORT', 3001))
 host = os.environ.get('FLASK_HOST', '0.0.0.0')
 
 app = Flask(
     __name__,
-    static_folder='../client/dist/' if debug else '../client-dist/',
+    static_folder='../client-dist/' if production else '../client/dist/',
     static_url_path='/'
 )
 
@@ -75,4 +76,4 @@ def webhook():
     return {'status': 'success'}, 200
 
 if __name__ == '__main__':
-    app.run(debug=debug, host=host, port=port)
+    app.run(debug=flask_debug, host=host, port=port)
