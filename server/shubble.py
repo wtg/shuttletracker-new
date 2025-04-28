@@ -9,7 +9,7 @@ host = os.environ.get('FLASK_HOST', '0.0.0.0')
 
 app = Flask(
     __name__,
-    static_folder='../client-dist/' if production else '../client/dist/',
+    static_folder='../client/dist/',
     static_url_path='/'
 )
 
