@@ -17,15 +17,10 @@ vehicles = []
 latest_locations = []
 
 @app.route('/')
-@app.route('/<path:path>')
-def serve_react(path=''):
+@app.route('/schedule')
+def serve_react():
     root_dir = Path(app.static_folder)
-    file_path = root_dir / path
-
-    if file_path.exists() and file_path.is_file():
-        return send_from_directory(root_dir, path)
-    else:
-        return send_from_directory(root_dir, 'index.html')
+    return send_from_directory(root_dir, 'index.html')
 
 @app.route('/api/locations', methods=['GET'])
 def get_locations():
