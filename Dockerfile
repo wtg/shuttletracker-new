@@ -13,7 +13,6 @@ COPY client/dist/ ./client/dist/
 # Set environment variable for Flask (production mode)
 ENV FLASK_DEBUG=false
 ENV FLASK_ENV=production
-ENV PORT=3000
 ENV FLASK_HOST=0.0.0.0
 
 # Expose port
