@@ -8,13 +8,16 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy server app and React build output
 COPY server/ ./server/
-COPY client/dist/ ./server/static/
+COPY client/dist/ ./client/dist/
 
 # Set environment variable for Flask (production mode)
-ENV APP_ENV=production
+ENV FLASK_DEBUG=false
+ENV FLASK_ENV=production
+ENV FLASK_PORT=3000
+ENV FLASK_HOST=0.0.0.0
 
 # Expose port
-EXPOSE 5000
+EXPOSE 3000
 
 # Start Flask app
-CMD ["python", "server/app.py"]
+CMD ["python", "server/shubble.py"]
