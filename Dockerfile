@@ -16,7 +16,7 @@ ENV FLASK_ENV=production
 ENV FLASK_HOST=0.0.0.0
 
 # Expose port
-EXPOSE 3000
+EXPOSE 80
 
 # Start Flask app
 CMD ["python", "server/shubble.py"]
