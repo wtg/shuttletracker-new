@@ -4,7 +4,7 @@ import os
 
 flask_debug = os.environ.get('FLASK_DEBUG', 'true').lower() == 'true'
 production = os.environ.get('FLASK_ENV', 'development').lower() == 'production'
-port = int(os.environ.get('PORT', 3001))
+port = int(os.environ.get('PORT', 3000))
 host = os.environ.get('FLASK_HOST', '0.0.0.0')
 
 app = Flask(
