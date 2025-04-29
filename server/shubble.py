@@ -17,7 +17,7 @@ vehicles = []
 latest_locations = []
 
 @app.route('/')
-@app.route('/schedule')
+@app.route('/<path:path>')
 def serve_react(path=''):
     root_dir = Path(app.static_folder)
     file_path = root_dir / path
