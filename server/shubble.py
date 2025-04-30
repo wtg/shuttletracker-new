@@ -1,6 +1,7 @@
 from flask import Flask, request, send_from_directory
 from pathlib import Path
 import os
+import logging
 
 flask_debug = os.environ.get('FLASK_DEBUG', 'true').lower() == 'true'
 production = os.environ.get('FLASK_ENV', 'development').lower() == 'production'
@@ -29,42 +30,46 @@ def get_locations():
 
 @app.route('/api/webhook', methods=['POST'])
 def webhook():
-    '''
-    Example request body:
-    {
-        'eventId': 'e3645383-32f1-4c66-a5e6-983b2e456e77',
-        'eventMs': 1600796684212,
-        'eventType': 'Alert',
-        'event': {
-            'alertEventUrl': 'https://cloud.samsara.com/o/53729/alerts/incidents/v2/159469/1/281474977075805/1600796684212/link?dl=NDA5ZjU2OGUtYzhmMi00N2IzLWJmNDktMDU0YmJiYTY0YTg0OlJ1Uk9BaExjYklMSHdDWmRZdFJnYzR1alJaRlFmbXBw',
-            'alertConditionDescription': 'Vehicle is inside geofence',
-            'alertConditionId': 'DeviceLocationInsideGeofence',
-            'details': ''Little Red' is inside Garage.',
-            'device': {
-            'id': 281474977075805,
-            'name': 'Little Red',
-            'serial': 'G9MTH7CNKZ',
-            'vin': 'JTMBK32V895081147'
-            },
-            'orgId': 53729,
-            'resolved': false,
-            'startMs': 1600796604125,
-            'summary': ''Little Red' is inside Garage.'
-        }
-    }
-    '''
     global latest_locations
     data = request.json
     if not data:
         return {'status': 'error', 'message': 'Invalid JSON'}, 400
     try:
-        if data['event']['alertConditionId'] == 'DeviceLocationInsideGeofence':
-            vehicles.append(data['event']['device']['id'])
-        elif data['event']['alertConditionId'] == 'DeviceLocationOutsideGeofence':
-            if data['event']['device']['id'] in vehicles:
-                vehicles.remove(data['event']['device']['id'])
+        # extract the data
+        if flask_debug:
+            app.logger.debug(f'Received data: {data}')
+        event_data = data.get('data', None)
+        if not event_data:
+            app.logger.error('Invalid data')
+            return {'status': 'error', 'message': 'Invalid data'}, 400
+        event_vehicle = event_data.get('vehicle', None)
+        if not event_vehicle:
+            app.logger.error('Invalid vehicle')
+            return {'status': 'error', 'message': 'Invalid vehicle'}, 400
+        event_vehicle_id = event_vehicle.get('id', None)
+        if not event_vehicle_id:
+            app.logger.error('Invalid vehicle ID')
+            return {'status': 'error', 'message': 'Invalid vehicle ID'}, 400
+
+        event_type = data.get('eventType', None)
+        if not event_type:
+            app.logger.error('Invalid event type')
+            return {'status': 'error', 'message': 'Invalid event type'}, 400
+
+        # handle geofence events
+        if event_type == 'GeofenceEntry':
+            app.logger.info(f'Geofence entry event for vehicle {event_vehicle_id}')
+            vehicles.append(event_vehicle_id)
+        elif event_type == 'GeofenceExit':
+            app.logger.info(f'Geofence exit event for vehicle {event_vehicle_id}')
+            if event_vehicle_id in vehicles:
+                vehicles.remove(event_vehicle_id)
             else:
-                print('ALERT: Vehicle exited geofence but not in vehicles list')
+                app.logger.warning(f'Vehicle {event_vehicle_id} not in geofence list')
+        else:
+            app.logger.error(f'Unknown event type: {event_type}')
+            return {'status': 'error', 'message': 'Unknown event type'}, 400
+
     except Exception as e:
         print(e)
         return {'status': 'error', 'message': 'error processing'}, 400
