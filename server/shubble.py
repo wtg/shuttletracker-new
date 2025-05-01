@@ -29,7 +29,7 @@ def update_locations():
         app.logger.error('API_KEY not set')
         return
     headers = {
-        'Authorization': api_key,
+        'Authorization': f'Bearer {api_key}',
         'Accept': 'application/json',
     }
     url_params = {
