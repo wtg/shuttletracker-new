@@ -55,7 +55,7 @@ export default function LiveLocation() {
             <h1>Live Location</h1>
             {location && Object.keys(location).length > 0 ? (
                 Object.keys(location).map((key) => {
-                    const { gps } = location[key];
+                    const gps = location[key];
                     return (
                         <div key={key}>
                             <h2>Vehicle ID: {key}</h2>
