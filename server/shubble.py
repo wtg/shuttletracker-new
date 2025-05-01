@@ -1,7 +1,8 @@
 from flask import Flask, request, send_from_directory
 from pathlib import Path
 import os
-import logging
+from apscheduler.schedulers.background import BackgroundScheduler
+import requests
 
 flask_debug = os.environ.get('FLASK_DEBUG', 'true').lower() == 'true'
 production = os.environ.get('FLASK_ENV', 'development').lower() == 'production'
@@ -15,7 +16,64 @@ app = Flask(
 )
 
 vehicles = []
-latest_locations = []
+latest_locations = {}
+
+def update_locations():
+    global latest_locations
+    global vehicles
+    if not vehicles:
+        app.logger.info('No vehicles to update')
+        return
+    api_key = os.environ.get('API_KEY')
+    if not api_key:
+        app.logger.error('API_KEY not set')
+        return
+    headers = {
+        'Authorization': api_key,
+        'Accept': 'application/json',
+    }
+    url_params = {
+        'vehicleIds': ','.join(vehicles),
+        'types': 'gps',
+    }
+    url = 'https://api.samsara.com/fleet/vehicles/stats/feed'
+
+    try:
+        response = requests.get(url, headers=headers, params=url_params)
+        if response.status_code == 200:
+            data = response.json()
+            api_data = data.get('data', None)
+            if not api_data:
+                app.logger.error('Invalid data')
+                return
+            for vehicle in api_data:
+                vehicle_id = vehicle.get('id', None)
+                if not vehicle_id:
+                    app.logger.error('Invalid vehicle ID')
+                    continue
+                gps_data = vehicle.get('gps', [None])[0]
+                if not gps_data:
+                    app.logger.error('Invalid GPS data')
+                    continue
+                if vehicle_id not in vehicles:
+                    app.logger.warning(f'Vehicle {vehicle_id} not in geofence list')
+                    continue
+                latest_locations[vehicle_id] = {
+                    'lat': gps_data.get('latitude', None),
+                    'lng': gps_data.get('longitude', None),
+                    'timestamp': gps_data.get('time', None),
+                    'speed': gps_data.get('speedMilesPerHour', None),
+                    'heading': gps_data.get('headingDegrees', None),
+                    'address': gps_data.get('reverseGeo', {}).get('formattedLocation', ''),
+                }
+            app.logger.info(f'Updated locations: {latest_locations}')
+        else:
+            app.logger.error(f'Error fetching locations: {response.status_code} {response.text}')
+    except requests.RequestException as e:
+        app.logger.error(f'Error fetching locations: {e}')
+
+
+scheduler = BackgroundScheduler()
 
 @app.route('/')
 @app.route('/schedule')
@@ -30,6 +88,7 @@ def get_locations():
 
 @app.route('/api/webhook', methods=['POST'])
 def webhook():
+    global vehicles
     global latest_locations
     data = request.json
     if not data:
@@ -64,6 +123,7 @@ def webhook():
             app.logger.info(f'Geofence exit event for vehicle {event_vehicle_id}')
             if event_vehicle_id in vehicles:
                 vehicles.remove(event_vehicle_id)
+                latest_locations.pop(event_vehicle_id, None)
             else:
                 app.logger.warning(f'Vehicle {event_vehicle_id} not in geofence list')
         else:
@@ -76,4 +136,6 @@ def webhook():
     return {'status': 'success'}, 200
 
 if __name__ == '__main__':
+    scheduler.start()
+    scheduler.add_job(update_locations, trigger="interval", seconds=5)
     app.run(debug=flask_debug, host=host, port=port)
