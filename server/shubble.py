@@ -15,7 +15,7 @@ app = Flask(
     static_url_path='/'
 )
 
-vehicles = ['281474977371235', '281474979530259', '281474987547650', '281474993785467', '281474993829898']
+vehicles = ['281474979957434', '281474993785467']
 latest_locations = {}
 
 def update_locations():
@@ -45,15 +45,18 @@ def update_locations():
             api_data = data.get('data', None)
             if not api_data:
                 app.logger.error('Invalid data')
+                app.logger.error(data)
                 return
             for vehicle in api_data:
                 vehicle_id = vehicle.get('id', None)
                 if not vehicle_id:
                     app.logger.error('Invalid vehicle ID')
+                    app.logger.error(vehicle)
                     continue
                 gps_data = vehicle.get('gps', [None])[0]
                 if not gps_data:
                     app.logger.error('Invalid GPS data')
+                    app.logger.error(vehicle)
                     continue
                 if vehicle_id not in vehicles:
                     app.logger.warning(f'Vehicle {vehicle_id} not in geofence list')
