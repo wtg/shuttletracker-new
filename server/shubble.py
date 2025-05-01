@@ -1,4 +1,4 @@
-from flask import Flask, request, send_from_directory
+from flask import Flask, request, send_from_directory, jsonify
 from pathlib import Path
 import os
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -84,7 +84,7 @@ def serve_react():
 @app.route('/api/locations', methods=['GET'])
 def get_locations():
     global latest_locations
-    return {'locations': latest_locations}
+    return jsonify(latest_locations)
 
 @app.route('/api/webhook', methods=['POST'])
 def webhook():
