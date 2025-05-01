@@ -53,14 +53,20 @@ export default function LiveLocation() {
     return (
         <div>
             <h1>Live Location</h1>
-            {location && location.length > 0 ? (
-                <div>
-                    <h2>Current Location:</h2>
-                    <p>Latitude: {location.data[0].gps.latitude}</p>
-                    <p>Longitude: {location.data[0].gps.longitude}</p>
-                    <p>Speed: {location.data[0].gps.speedMilesPerHour} mph</p>
-                    <p>Heading: {location.data[0].gps.headingDegrees} degrees</p>
-                </div>
+            {location && Object.keys(location).length > 0 ? (
+                Object.keys(location).map((key) => {
+                    const { gps } = location[key];
+                    return (
+                        <div key={key}>
+                            <h2>Vehicle ID: {key}</h2>
+                            <p>Latitude: {gps.lat}</p>
+                            <p>Longitude: {gps.lng}</p>
+                            <p>Speed: {gps.speed} mph</p>
+                            <p>Heading: {gps.heading} degrees</p>
+                            <p>Time: {new Date(gps.timestamp).toLocaleString()}</p>
+                        </div>
+                    )
+                })
             ) : (
                 <p>Loading...</p>
             )}
