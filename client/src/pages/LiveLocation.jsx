@@ -64,6 +64,7 @@ export default function LiveLocation() {
                             <p>Speed: {gps.speed} mph</p>
                             <p>Heading: {gps.heading} degrees</p>
                             <p>Time: {new Date(gps.timestamp).toLocaleString()}</p>
+                            <p>Address: {gps.address}</p>
                         </div>
                     )
                 })
