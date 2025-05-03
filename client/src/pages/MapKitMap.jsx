@@ -41,6 +41,7 @@ export default function MapKitMap({ vehicles }) {
                         });
                         resolve();
                     };
+                    script.setAttribute('data-libraries', 'map')
                     script.onerror = reject;
                     document.head.appendChild(script);
                 });
