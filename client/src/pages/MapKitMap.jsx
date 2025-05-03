@@ -48,10 +48,10 @@ export default function MapKitMap({ vehicles }) {
                 },
                 libraries: ['map']
             });
-
-            const map = new window.mapkit.Map(mapRef.current);
         };
+
         initMap();
+        const map = new window.mapkit.Map(mapRef.current);
     }, []);
 
 return (
