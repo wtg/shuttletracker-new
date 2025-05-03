@@ -5,15 +5,15 @@ export default function MapKitMap({ vehicles }) {
     const mapRef = useRef(null);
 
     useEffect(() => {
-        if (!mapkit || !mapRef.current) {
+        if (!window.mapkit || !mapRef.current) {
             return;
         }
         const coordinates = vehicles.map(vehicle => {
-            return new mapkit.Coordinate(vehicle.lat, vehicle.lng);
+            return new window.mapkit.Coordinate(vehicle.lat, vehicle.lng);
         });
         const annotations = vehicles.map(vehicle => {
-            return new mapkit.MarkerAnnotation(
-                new mapkit.Coordinate(vehicle.lat, vehicle.lng),
+            return new window.mapkit.MarkerAnnotation(
+                new window.mapkit.Coordinate(vehicle.lat, vehicle.lng),
                 {
                     title: vehicle.id,
                     subtitle: `Speed: ${vehicle.speed} mph`,
@@ -25,7 +25,7 @@ export default function MapKitMap({ vehicles }) {
     // initialize mapkit
     useEffect(() => {
         const initMap = async () => {
-            if (!mapkit) {
+            if (!window.mapkit) {
                 // load the MapKit JS library
                 await new Promise((resolve, reject) => {
                     const script = document.createElement('script');
@@ -33,13 +33,14 @@ export default function MapKitMap({ vehicles }) {
                     script.crossOrigin = true;
                     script.async = true;
                     script.setAttribute('data-callback', 'initMapKit');
+                    script.setAttribute('data-libraries', 'services,full-map,geojson');
                     script.onload = resolve;
                     script.onerror = reject;
                     document.head.appendChild(script);
                 });
             }
 
-            mapkit.init({
+            window.mapkit.init({
                 authorizationCallback: function(done) {
                     fetch('/api/mapkit')
                         .then(res => res.json())
@@ -47,13 +48,13 @@ export default function MapKitMap({ vehicles }) {
                 }
             });
 
-            mapkit.addEventListener("load", () => {
+            window.mapkit.addEventListener("load", () => {
                 mapkit.loadLibrary("map").then(() => {
                     new mapkit.Map(mapRef.current);
                 });
             });
 
-            const map = new mapkit.Map(mapRef.current);
+            const map = new window.mapkit.Map(mapRef.current);
         };
 
         initMap();
