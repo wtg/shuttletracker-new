@@ -45,9 +45,10 @@ export default function MapKitMap({ vehicles }) {
                     fetch('/api/mapkit')
                         .then(res => res.json())
                         .then(done);
-                }
+                },
+                libraries: ['map']
             });
-            
+
             const map = new window.mapkit.Map(mapRef.current);
         };
         initMap();
