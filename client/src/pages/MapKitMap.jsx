@@ -5,7 +5,7 @@ export default function MapKitMap({ vehicles }) {
     const mapRef = useRef(null);
 
     useEffect(() => {
-        if (!mapRef.current) {
+        if (!window.mapkit || !mapRef.current) {
             return;
         }
         const coordinates = vehicles.map(vehicle => {
@@ -20,7 +20,7 @@ export default function MapKitMap({ vehicles }) {
                 }
             );
         });
-    }, [vehicles]);
+    }, [vehicles, mapRef]);
 
     // initialize mapkit
     useEffect(() => {
