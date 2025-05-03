@@ -1,0 +1,60 @@
+import { useEffect } from "react";
+
+export default function MapKitMap({ vehicles }) {
+
+    const mapRef = useRef(null);
+
+    useEffect(() => {
+        if (!mapRef.current) {
+            return;
+        }
+        const coordinates = vehicles.map(vehicle => {
+            return new window.mapkit.Coordinate(vehicle.lat, vehicle.lng);
+        });
+        const annotations = vehicles.map(vehicle => {
+            return new window.mapkit.MarkerAnnotation(
+                new window.mapkit.Coordinate(vehicle.lat, vehicle.lng),
+                {
+                    title: vehicle.id,
+                    subtitle: `Speed: ${vehicle.speed} mph`,
+                }
+            );
+        });
+    }, [vehicles]);
+
+    // initialize mapkit
+    useEffect(() => {
+        const initMap = async () => {
+            if (!window.mapkit) {
+                // load the MapKit JS library
+                await new Promise((resolve, reject) => {
+                    const script = document.createElement('script');
+                    script.src = 'https://cdn.apple-mapkit.com/mk/5.x.x/mapkit.core.js';
+                    script.crossOrigin = true;
+                    script.async = true;
+                    script.setAttribute('data-callback', 'initMapKit');
+                    script.setAttribute('data-libraries', 'services,full-map,geojson');
+                    script.onload = resolve;
+                    script.onerror = reject;
+                    document.head.appendChild(script);
+                });
+            }
+
+            window.mapkit.init({
+                authorizationCallback: function(done) {
+                    fetch('/api/mapkit')
+                        .then(res => res.json())
+                        .then(done);
+                }
+            });
+        };
+        const map = new window.mapkit.Map(mapRef.current);
+        initMap();
+    }, []);
+
+return (
+    <div
+        ref={mapRef}
+    />
+    );
+};

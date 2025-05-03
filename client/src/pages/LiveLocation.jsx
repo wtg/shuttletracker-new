@@ -2,26 +2,9 @@ import React, {
     useState,
     useEffect,
 } from 'react';
+import MapKitMap from './MapKitMap';
 
 export default function LiveLocation() {
-
-    /*
-    // https://developers.samsara.com/reference/getvehiclestatsfeed
-    response body:
-    {
-        data: [
-            {
-                gps: {
-                    headingDegrees,
-                    latitude,
-                    longitude,
-                    speedMilesPerHour,
-                    time,
-                }
-            }
-        ]
-    }
-    */
 
     const [location, setLocation] = useState(null);
 
@@ -52,6 +35,19 @@ export default function LiveLocation() {
 
     return (
         <div>
+            <MapKitMap vehicles={
+                Object.keys(location).map((key) => {
+                    const gps = location[key];
+                    return {
+                        id: key,
+                        speed: gps.speed,
+                        lat: gps.lat,
+                        lng: gps.lng,
+                        heading: gps.heading,
+                        time: new Date(gps.timestamp).toLocaleString(),
+                    }
+                })
+            }/>
             <h1>Live Location</h1>
             {location && Object.keys(location).length > 0 ? (
                 Object.keys(location).map((key) => {
