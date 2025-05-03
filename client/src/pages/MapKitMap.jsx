@@ -1,26 +1,9 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function MapKitMap({ vehicles }) {
 
     const mapRef = useRef(null);
-
-    useEffect(() => {
-        if (!window.mapkit || !mapRef.current) {
-            return;
-        }
-        const coordinates = vehicles.map(vehicle => {
-            return new window.mapkit.Coordinate(vehicle.lat, vehicle.lng);
-        });
-        const annotations = vehicles.map(vehicle => {
-            return new window.mapkit.MarkerAnnotation(
-                new window.mapkit.Coordinate(vehicle.lat, vehicle.lng),
-                {
-                    title: vehicle.id,
-                    subtitle: `Speed: ${vehicle.speed} mph`,
-                }
-            );
-        });
-    }, [vehicles, mapRef]);
+    const [mapLoaded, setMapLoaded] = useState(false);
 
     // initialize mapkit
     useEffect(() => {
@@ -40,6 +23,7 @@ export default function MapKitMap({ vehicles }) {
                             },
                             libraries: ['map'],
                         });
+                        setMapLoaded(true);
                         resolve();
                     };
                     script.onerror = reject;
@@ -48,10 +32,29 @@ export default function MapKitMap({ vehicles }) {
             }
         };
 
-        initMap().then(() => {
-            mapRef.current = new window.mapkit.Map('map');
-        });
+        initMap();
     }, []);
+
+    useEffect(() => {
+        if (mapLoaded && mapRef.current) {
+            const map = new window.mapkit.Map(mapRef.current);
+
+            const coordinates = vehicles.map(vehicle => {
+                return new window.mapkit.Coordinate(vehicle.lat, vehicle.lng);
+            });
+            const annotations = vehicles.map(vehicle => {
+                return new window.mapkit.MarkerAnnotation(
+                    new window.mapkit.Coordinate(vehicle.lat, vehicle.lng),
+                    {
+                        title: vehicle.id,
+                        subtitle: `Speed: ${vehicle.speed} mph`,
+                    }
+                );
+            });
+
+            map.addAnnotations(annotations);
+        }
+    }, [mapLoaded, vehicles]);
 
 return (
     <div
