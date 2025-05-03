@@ -27,6 +27,7 @@ export default function MapKitMap({ vehicles }) {
                         setMapLoaded(true);
                         resolve();
                     };
+                    script.setAttribute('data-libraries', 'map');
                     script.onerror = reject;
                     document.head.appendChild(script);
                 });
@@ -40,22 +41,24 @@ export default function MapKitMap({ vehicles }) {
         if (mapLoaded && mapRef.current) {
             console.log('MapKit loaded and mapRef is set');
             console.log('mapkit libraries', window.mapkit.loadedLibraries);
-            const map = new window.mapkit.Map(mapRef.current);
+            window.mapkit.load(['map'], () => {
+                console.log('MapKit map loaded');
+                const map = new window.mapkit.Map(mapRef.current);
 
-            const coordinates = vehicles.map(vehicle => {
-                return new window.mapkit.Coordinate(vehicle.lat, vehicle.lng);
+                const coordinates = vehicles.map(vehicle => {
+                    return new window.mapkit.Coordinate(vehicle.lat, vehicle.lng);
+                });
+                const annotations = vehicles.map(vehicle => {
+                    return new window.mapkit.MarkerAnnotation(
+                        new window.mapkit.Coordinate(vehicle.lat, vehicle.lng),
+                        {
+                            title: vehicle.id,
+                            subtitle: `Speed: ${vehicle.speed} mph`,
+                        }
+                    );
+                });
+                map.addAnnotations(annotations);
             });
-            const annotations = vehicles.map(vehicle => {
-                return new window.mapkit.MarkerAnnotation(
-                    new window.mapkit.Coordinate(vehicle.lat, vehicle.lng),
-                    {
-                        title: vehicle.id,
-                        subtitle: `Speed: ${vehicle.speed} mph`,
-                    }
-                );
-            });
-
-            map.addAnnotations(annotations);
         }
     }, [mapLoaded, vehicles]);
 
