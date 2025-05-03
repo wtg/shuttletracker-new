@@ -39,6 +39,7 @@ export default function MapKitMap({ vehicles }) {
     useEffect(() => {
         if (mapLoaded && mapRef.current) {
             console.log('MapKit loaded and mapRef is set');
+            console.log('mapkit libraries', window.mapkit.loadedLibraries);
             const map = new window.mapkit.Map(mapRef.current);
 
             const coordinates = vehicles.map(vehicle => {
