@@ -47,8 +47,9 @@ export default function MapKitMap({ vehicles }) {
                         .then(done);
                 }
             });
+            
+            const map = new window.mapkit.Map(mapRef.current);
         };
-        const map = new window.mapkit.Map(mapRef.current);
         initMap();
     }, []);
 
