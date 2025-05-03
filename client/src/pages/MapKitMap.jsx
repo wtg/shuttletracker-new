@@ -49,8 +49,8 @@ export default function MapKitMap({ vehicles }) {
             });
 
             window.mapkit.addEventListener("load", () => {
-                mapkit.loadLibrary("map").then(() => {
-                    new mapkit.Map(mapRef.current);
+                window.mapkit.loadLibrary("map").then(() => {
+                    new window.mapkit.Map(mapRef.current);
                 });
             });
 
