@@ -4,7 +4,6 @@ export default function MapKitMap({ vehicles }) {
 
     const mapRef = useRef(null);
 
-    /*
     useEffect(() => {
         if (!window.mapkit || !mapRef.current) {
             return;
@@ -22,7 +21,6 @@ export default function MapKitMap({ vehicles }) {
             );
         });
     }, [vehicles, mapRef]);
-    */
 
     // initialize mapkit
     useEffect(() => {
