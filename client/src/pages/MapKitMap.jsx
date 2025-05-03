@@ -30,34 +30,26 @@ export default function MapKitMap({ vehicles }) {
                 await new Promise((resolve, reject) => {
                     const script = document.createElement('script');
                     script.src = 'https://cdn.apple-mapkit.com/mk/5.x.x/mapkit.core.js';
-                    script.crossOrigin = true;
-                    script.async = true;
-                    script.setAttribute('data-callback', 'initMapKit');
-                    script.setAttribute('data-libraries', 'services,full-map,geojson');
-                    script.onload = resolve;
+                    script.crossOrigin = 'anonymous';
+                    script.onload = () => {
+                        window.mapkit.init({
+                            authorizationCallback: function(done) {
+                                fetch('/api/mapkit')
+                                    .then(res => res.json())
+                                    .then(done);
+                            }
+                        });
+                        resolve();
+                    };
                     script.onerror = reject;
                     document.head.appendChild(script);
                 });
             }
-
-            window.mapkit.init({
-                authorizationCallback: function(done) {
-                    fetch('/api/mapkit')
-                        .then(res => res.json())
-                        .then(done);
-                }
-            });
-
-            window.mapkit.addEventListener("load", () => {
-                window.mapkit.loadLibrary("map").then(() => {
-                    new window.mapkit.Map(mapRef.current);
-                });
-            });
-
-            const map = new window.mapkit.Map(mapRef.current);
         };
 
-        initMap();
+        initMap().then(() => {
+            mapRef.current = new window.mapkit.Map('map');
+        });
     }, []);
 
 return (
