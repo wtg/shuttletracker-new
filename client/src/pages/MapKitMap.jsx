@@ -37,11 +37,11 @@ export default function MapKitMap({ vehicles }) {
                                 fetch('/api/mapkit')
                                     .then(res => res.json())
                                     .then(done);
-                            }
+                            },
+                            libraries: ['map'],
                         });
                         resolve();
                     };
-                    script.setAttribute('data-libraries', 'map')
                     script.onerror = reject;
                     document.head.appendChild(script);
                 });
