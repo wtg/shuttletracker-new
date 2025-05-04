@@ -43,6 +43,7 @@ export default function MapKitMap({ vehicles }) {
             });
             setMapLoaded(true);
         }
+        mapkitScript();
     }, [token]);
 
     useEffect(() => {
