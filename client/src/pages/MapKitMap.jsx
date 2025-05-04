@@ -46,27 +46,33 @@ export default function MapKitMap({ vehicles }) {
                 zoomLevel: 10,
             };
 
+            console.log('mapRef', mapRef.current);
+
             const map = new window.mapkit.Map(mapRef.current, mapOptions);
 
-            /*
-            const coordinates = vehicles.map(vehicle => {
-                return new window.mapkit.Coordinate(vehicle.lat, vehicle.lng);
-            });
-            const annotations = vehicles.map(vehicle => {
-                return new window.mapkit.MarkerAnnotation(
-                    new window.mapkit.Coordinate(vehicle.lat, vehicle.lng),
-                    {
-                        title: vehicle.id,
-                        subtitle: `Speed: ${vehicle.speed} mph`,
-                    }
-                );
-            });
-            map.showItems(coordinates);
-            map.addAnnotations(annotations);
-            */
-
         }
-    }, [mapLoaded, vehicles]);
+    }, [mapLoaded]);
+
+    /*
+    useEffect(() => {
+        if (!mapLoaded || !mapRef.current) return;
+        const coordinates = vehicles.map(vehicle => {
+            return new window.mapkit.Coordinate(vehicle.lat, vehicle.lng);
+        });
+        const annotations = vehicles.map(vehicle => {
+            return new window.mapkit.MarkerAnnotation(
+                new window.mapkit.Coordinate(vehicle.lat, vehicle.lng),
+                {
+                    title: vehicle.id,
+                    subtitle: `Speed: ${vehicle.speed} mph`,
+                }
+            );
+        });
+        map.showItems(coordinates);
+        map.addAnnotations(annotations);
+    }, [vehicles]);
+        */
+
 
 return (
     <div
