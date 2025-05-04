@@ -27,16 +27,14 @@ export default function MapKitMap({ vehicles }) {
                     const script = document.createElement('script');
                     script.src = 'https://cdn.apple-mapkit.com/mk/5.x.x/mapkit.core.js';
                     script.crossOrigin = 'anonymous';
-                    script.onload = () => {
+                    script.addEventListener('load', () => {
                         window.mapkit.init({
                             authorizationCallback: (done) => done(token),
                             libraries: ['map'],
                         });
-                        setMapLoaded(true);
                         resolve();
-                    };
-                    script.setAttribute('data-libraries', 'map');
-                    script.onerror = reject;
+                    }, { once: true });
+                    script.onerror = reject();
                     document.head.appendChild(script);
                 });
             }
