@@ -23,10 +23,8 @@ export default function MapKitMap({ vehicles }) {
                             },
                             libraries: ['map'],
                         });
-                        window.mapkit.load(['map'], () => {
-                            console.log('setting map loaded');
-                            setMapLoaded(true);
-                        });
+                        window.mapkit.load(['map'], () => {});
+                        setMapLoaded(true);
                         resolve();
                     };
                     script.setAttribute('data-libraries', 'map');
