@@ -36,9 +36,9 @@ export default function MapKitMap({ vehicles }) {
                     window.mapkit.init({
                         authorizationCallback: (done) => done(token),
                     });
+                    window.mapkit.load('map');
                     resolve();
                 }, { once: true });
-                window.mapkit.load('map');
                 script.onerror = reject;
                 document.head.appendChild(script);
             });
