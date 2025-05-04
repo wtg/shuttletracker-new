@@ -24,6 +24,8 @@ export default function MapKitMap({ vehicles }) {
 
     // initialize mapkit
     useEffect(() => {
+        console.log('token', token);
+        if (!token) return;
         const initMap = async () => {
             // load the MapKit JS library
             await new Promise((resolve, reject) => {
@@ -42,7 +44,13 @@ export default function MapKitMap({ vehicles }) {
             });
         };
 
-        initMap();
+        initMap()
+            .then(() => {
+                setMapLoaded(true);
+            })
+            .catch((error) => {
+                console.error('Error loading MapKit:', error);
+            });
     }, [token]);
 
     useEffect(() => {
