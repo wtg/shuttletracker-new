@@ -24,6 +24,7 @@ export default function MapKitMap({ vehicles }) {
                             libraries: ['map'],
                         });
                         window.mapkit.load(['map'], () => {
+                            console.log('setting map loaded');
                             setMapLoaded(true);
                         });
                         resolve();
