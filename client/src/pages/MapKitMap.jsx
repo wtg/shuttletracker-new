@@ -48,6 +48,7 @@ export default function MapKitMap({ vehicles }) {
 
             const map = new window.mapkit.Map(mapRef.current, mapOptions);
 
+            /*
             const coordinates = vehicles.map(vehicle => {
                 return new window.mapkit.Coordinate(vehicle.lat, vehicle.lng);
             });
@@ -60,7 +61,9 @@ export default function MapKitMap({ vehicles }) {
                     }
                 );
             });
+            map.showItems(coordinates);
             map.addAnnotations(annotations);
+            */
 
         }
     }, [mapLoaded, vehicles]);
