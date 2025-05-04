@@ -35,10 +35,10 @@ export default function MapKitMap({ vehicles }) {
                 script.addEventListener('load', () => {
                     window.mapkit.init({
                         authorizationCallback: (done) => done(token),
-                        libraries: ['map'],
                     });
                     resolve();
                 }, { once: true });
+                window.mapkit.load('map');
                 script.onerror = reject;
                 document.head.appendChild(script);
             });
