@@ -39,7 +39,7 @@ export default function MapKitMap({ vehicles }) {
                     });
                     resolve();
                 }, { once: true });
-                script.onerror = reject();
+                script.onerror = reject;
                 document.head.appendChild(script);
             });
         };
