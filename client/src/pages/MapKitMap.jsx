@@ -9,6 +9,19 @@ export default function MapKitMap({ vehicles }) {
     useEffect(() => {
         const initMap = async () => {
             if (!window.mapkit) {
+                const token = await new Promise((resolve) => {
+                    fetch('/api/mapkit')
+                        .then((response) => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then((data) => {
+                            const token = data;
+                            resolve(token);
+                        });
+                });
                 // load the MapKit JS library
                 await new Promise((resolve, reject) => {
                     const script = document.createElement('script');
@@ -16,14 +29,9 @@ export default function MapKitMap({ vehicles }) {
                     script.crossOrigin = 'anonymous';
                     script.onload = () => {
                         window.mapkit.init({
-                            authorizationCallback: function(done) {
-                                fetch('/api/mapkit')
-                                    .then(res => res.json())
-                                    .then(done);
-                            },
+                            authorizationCallback: (done) => done(token),
                             libraries: ['map'],
                         });
-                        window.mapkit.load(['map'], () => {});
                         setMapLoaded(true);
                         resolve();
                     };
@@ -44,8 +52,6 @@ export default function MapKitMap({ vehicles }) {
                 center: new window.mapkit.Coordinate(42.7299107, -73.6835165),
                 zoomLevel: 10,
             };
-
-            console.log('mapRef', mapRef.current);
 
             const map = new window.mapkit.Map(mapRef.current, mapOptions);
 
