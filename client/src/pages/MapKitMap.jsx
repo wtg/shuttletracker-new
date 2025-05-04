@@ -4,44 +4,46 @@ export default function MapKitMap({ vehicles }) {
 
     const mapRef = useRef(null);
     const [mapLoaded, setMapLoaded] = useState(false);
+    const [token, setToken] = useState(null);
+
+    useEffect(() => {
+        fetch('/api/mapkit')
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                setToken(data);
+            })
+            .catch((error) => {
+                console.error('Error fetching MapKit token:', error);
+            });
+    }, []);
 
     // initialize mapkit
     useEffect(() => {
         const initMap = async () => {
-            if (!window.mapkit) {
-                const token = await new Promise((resolve) => {
-                    fetch('/api/mapkit')
-                        .then((response) => {
-                            if (!response.ok) {
-                                throw new Error('Network response was not ok');
-                            }
-                            return response.json();
-                        })
-                        .then((data) => {
-                            const token = data;
-                            resolve(token);
-                        });
-                });
-                // load the MapKit JS library
-                await new Promise((resolve, reject) => {
-                    const script = document.createElement('script');
-                    script.src = 'https://cdn.apple-mapkit.com/mk/5.x.x/mapkit.core.js';
-                    script.crossOrigin = 'anonymous';
-                    script.addEventListener('load', () => {
-                        window.mapkit.init({
-                            authorizationCallback: (done) => done(token),
-                            libraries: ['map'],
-                        });
-                        resolve();
-                    }, { once: true });
-                    script.onerror = reject();
-                    document.head.appendChild(script);
-                });
-            }
+            // load the MapKit JS library
+            await new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = 'https://cdn.apple-mapkit.com/mk/5.x.x/mapkit.core.js';
+                script.crossOrigin = 'anonymous';
+                script.addEventListener('load', () => {
+                    window.mapkit.init({
+                        authorizationCallback: (done) => done(token),
+                        libraries: ['map'],
+                    });
+                    resolve();
+                }, { once: true });
+                script.onerror = reject();
+                document.head.appendChild(script);
+            });
         };
 
         initMap();
-    }, []);
+    }, [token]);
 
     useEffect(() => {
         if (mapLoaded) {
