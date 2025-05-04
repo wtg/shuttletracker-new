@@ -37,6 +37,7 @@ export default function MapKitMap({ vehicles }) {
                         authorizationCallback: (done) => done(token),
                     });
                     window.mapkit.load('map');
+                    console.log(window.mapkit.loadedLibraries);
                     resolve();
                 }, { once: true });
                 script.onerror = reject;
