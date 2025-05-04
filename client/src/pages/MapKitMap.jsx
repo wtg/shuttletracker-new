@@ -6,6 +6,14 @@ export default function MapKitMap({ vehicles }) {
     const [mapLoaded, setMapLoaded] = useState(false);
     const [token, setToken] = useState(null);
 
+    const setupMapKitJs = async() => {
+        if (!window.mapkit || window.mapkit.loadedLibraries.length === 0) {
+            await new Promise(resolve => { window.initMapKit = resolve });
+            delete window.initMapKit;
+        }
+    };
+
+
     useEffect(() => {
         fetch('/api/mapkit')
             .then((response) => {
@@ -24,42 +32,21 @@ export default function MapKitMap({ vehicles }) {
 
     // initialize mapkit
     useEffect(() => {
-        console.log('token', token);
         if (!token) return;
         const mapkitScript = async () => {
             // load the MapKit JS library
-            await new Promise((resolve, reject) => {
-                const script = document.createElement('script');
-                script.src = 'https://cdn.apple-mapkit.com/mk/5.x.x/mapkit.core.js';
-                script.crossOrigin = 'anonymous';
-                script.async = true;
-                script.addEventListener('load', () => {
-                    window.mapkit.init({
-                        authorizationCallback: (done) => done(token),
-                        libraries: ['map'],
-                    });
-                    console.log(window.mapkit.loadedLibraries);
-                    resolve();
-                }, { once: true });
-                script.setAttribute('data-libraries', 'map');
-                script.setAttribute('data-callback', 'initMap');
-                script.onerror = reject;
-                document.head.appendChild(script);
+            await setupMapKitJs();
+            window.mapkit.init({
+                authorizationCallback: (done) => {
+                    done(token);
+                },
             });
-        };
-
-        mapkitScript()
-            .then(() => {
-                setMapLoaded(true);
-            })
-            .catch((error) => {
-                console.error('Error loading MapKit:', error);
-            });
+            setMapLoaded(true);
+        }
     }, [token]);
 
     useEffect(() => {
         if (mapLoaded) {
-            console.log('libraries', window.mapkit.Libraries);
 
             const mapOptions = {
                 center: new window.mapkit.Coordinate(42.7299107, -73.6835165),
