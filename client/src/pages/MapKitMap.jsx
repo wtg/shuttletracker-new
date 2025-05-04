@@ -67,6 +67,7 @@ export default function MapKitMap({ vehicles }) {
 
 return (
     <div
+        style={{ width: '100%', height: '100vh' }}
         ref={mapRef}
     >
     </div>
