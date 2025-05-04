@@ -26,12 +26,13 @@ export default function MapKitMap({ vehicles }) {
     useEffect(() => {
         console.log('token', token);
         if (!token) return;
-        const initMap = async () => {
+        const mapkitScript = async () => {
             // load the MapKit JS library
             await new Promise((resolve, reject) => {
                 const script = document.createElement('script');
                 script.src = 'https://cdn.apple-mapkit.com/mk/5.x.x/mapkit.core.js';
                 script.crossOrigin = 'anonymous';
+                script.async = true;
                 script.addEventListener('load', () => {
                     window.mapkit.init({
                         authorizationCallback: (done) => done(token),
@@ -41,12 +42,13 @@ export default function MapKitMap({ vehicles }) {
                     resolve();
                 }, { once: true });
                 script.setAttribute('data-libraries', 'map');
+                script.setAttribute('data-callback', 'initMap');
                 script.onerror = reject;
                 document.head.appendChild(script);
             });
         };
 
-        initMap()
+        mapkitScript()
             .then(() => {
                 setMapLoaded(true);
             })
@@ -57,6 +59,7 @@ export default function MapKitMap({ vehicles }) {
 
     useEffect(() => {
         if (mapLoaded) {
+            console.log(window.mapkit.loadedLibraries);
 
             const mapOptions = {
                 center: new window.mapkit.Coordinate(42.7299107, -73.6835165),
