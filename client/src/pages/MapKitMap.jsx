@@ -23,8 +23,9 @@ export default function MapKitMap({ vehicles }) {
                             },
                             libraries: ['map'],
                         });
-                        console.log('MapKit loaded');
-                        setMapLoaded(true);
+                        window.mapkit.load(['map'], () => {
+                            setMapLoaded(true);
+                        });
                         resolve();
                     };
                     script.setAttribute('data-libraries', 'map');
@@ -39,32 +40,35 @@ export default function MapKitMap({ vehicles }) {
 
     useEffect(() => {
         if (mapLoaded && mapRef.current) {
-            console.log('MapKit loaded and mapRef is set');
-            console.log('mapkit libraries', window.mapkit.loadedLibraries);
-            window.mapkit.load(['map'], () => {
-                console.log('MapKit map loaded');
-                const map = new window.mapkit.Map(mapRef.current);
 
-                const coordinates = vehicles.map(vehicle => {
-                    return new window.mapkit.Coordinate(vehicle.lat, vehicle.lng);
-                });
-                const annotations = vehicles.map(vehicle => {
-                    return new window.mapkit.MarkerAnnotation(
-                        new window.mapkit.Coordinate(vehicle.lat, vehicle.lng),
-                        {
-                            title: vehicle.id,
-                            subtitle: `Speed: ${vehicle.speed} mph`,
-                        }
-                    );
-                });
-                map.addAnnotations(annotations);
+            const mapOptions = {
+                center: new window.mapkit.Coordinate(42.7299107, -73.6835165),
+                zoomLevel: 10,
+            };
+
+            const map = new window.mapkit.Map(mapRef.current, mapOptions);
+
+            const coordinates = vehicles.map(vehicle => {
+                return new window.mapkit.Coordinate(vehicle.lat, vehicle.lng);
             });
+            const annotations = vehicles.map(vehicle => {
+                return new window.mapkit.MarkerAnnotation(
+                    new window.mapkit.Coordinate(vehicle.lat, vehicle.lng),
+                    {
+                        title: vehicle.id,
+                        subtitle: `Speed: ${vehicle.speed} mph`,
+                    }
+                );
+            });
+            map.addAnnotations(annotations);
+
         }
     }, [mapLoaded, vehicles]);
 
 return (
     <div
         ref={mapRef}
-    />
+    >
+    </div>
     );
 };
