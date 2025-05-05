@@ -52,7 +52,7 @@ export default function MapKitMap({ vehicles }) {
         if (mapLoaded) {
 
             const center = new window.mapkit.Coordinate(42.729435290940444, -73.67810063507858);
-            const span = new window.mapkit.CoordinateSpan(0.015, 0.005);
+            const span = new window.mapkit.CoordinateSpan(0.02, 0.005);
             const region = new window.mapkit.CoordinateRegion(center, span);
 
             const mapOptions = {
@@ -70,16 +70,63 @@ export default function MapKitMap({ vehicles }) {
 
     useEffect(() => {
         if (!mapLoaded) return;
-        const annotations = vehicles.map(vehicle => {
-            return new window.mapkit.MarkerAnnotation(
-                new window.mapkit.Coordinate(vehicle.lat, vehicle.lng),
-                {
-                    title: vehicle.id,
-                    subtitle: `Speed: ${vehicle.speed} mph`,
-                }
-            );
+
+        // north
+        // 42.730676958536144, -73.67674616623393
+        // 42.737043669212134, -73.67036818086305
+        // 42.735455332919045, -73.6636579612421
+        // 42.73453830902714, -73.6634349282215
+        // 42.7327033365768, -73.66522556880754
+        // 42.73080472933945, -73.6673502020617
+        // 42.73175755884203, -73.66967270972104
+
+        // west
+        // 42.730318398121575, -73.67656636425313
+        // 42.72799822908236, -73.67809671921837
+        // 42.72293385583282, -73.67960937432454
+        // 42.72766469852938, -73.68716188006067
+        // 42.73160170173599, -73.68627833913843
+        // 42.731468785216094, -73.68128223685743
+        // 42.731023124913804, -73.67909065365457
+
+        northStops = [
+            new window.mapkit.Coordinate(42.730676958536144, -73.67674616623393),
+            new window.mapkit.Coordinate(42.737043669212134, -73.67036818086305),
+            new window.mapkit.Coordinate(42.735455332919045, -73.6636579612421),
+            new window.mapkit.Coordinate(42.73453830902714, -73.6634349282215),
+            new window.mapkit.Coordinate(42.7327033365768, -73.66522556880754),
+            new window.mapkit.Coordinate(42.73080472933945, -73.6673502020617),
+            new window.mapkit.Coordinate(42.73175755884203, -73.66967270972104)
+        ]
+
+        westStops = [
+            new window.mapkit.Coordinate(42.730318398121575, -73.67656636425313),
+            new window.mapkit.Coordinate(42.72799822908236, -73.67809671921837),
+            new window.mapkit.Coordinate(42.72293385583282, -73.67960937432454),
+            new window.mapkit.Coordinate(42.72766469852938, -73.68716188006067),
+            new window.mapkit.Coordinate(42.73160170173599, -73.68627833913843),
+            new window.mapkit.Coordinate(42.731468785216094, -73.68128223685743),
+            new window.mapkit.Coordinate(42.731023124913804, -73.67909065365457)
+        ]
+
+        // show markers
+        northStops.map((stop, index) => {
+            const annotation = new window.mapkit.MarkerAnnotation(stop, {
+                title: `North Stop ${index + 1}`,
+                subtitle: 'North',
+                color: '#FF0000',
+            });
+            map.addAnnotation(annotation);
         });
-        map.addAnnotations(annotations);
+        westStops.map((stop, index) => {
+            const annotation = new window.mapkit.MarkerAnnotation(stop, {
+                title: `West Stop ${index + 1}`,
+                subtitle: 'West',
+                color: '#0000FF',
+            });
+            map.addAnnotation(annotation);
+        });
+
     }, [vehicles]);
 
 return (
