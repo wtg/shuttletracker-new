@@ -68,9 +68,6 @@ export default function MapKitMap({ vehicles }) {
 
     useEffect(() => {
         if (!mapLoaded) return;
-        const coordinates = vehicles.map(vehicle => {
-            return new window.mapkit.Coordinate(vehicle.lat, vehicle.lng);
-        });
         const annotations = vehicles.map(vehicle => {
             return new window.mapkit.MarkerAnnotation(
                 new window.mapkit.Coordinate(vehicle.lat, vehicle.lng),
@@ -80,7 +77,6 @@ export default function MapKitMap({ vehicles }) {
                 }
             );
         });
-        map.showItems(coordinates);
         map.addAnnotations(annotations);
     }, [vehicles]);
 
