@@ -52,7 +52,7 @@ export default function MapKitMap({ vehicles }) {
 
             const center = new window.mapkit.Coordinate(42.7299107, -73.6835165);
             const span = new window.mapkit.CoordinateSpan(0.1, 0.1);
-            const region = new window.mapkit.Region(center, span);
+            const region = new window.mapkit.CoordinateRegion(center, span);
 
             const mapOptions = {
                 center: center,
