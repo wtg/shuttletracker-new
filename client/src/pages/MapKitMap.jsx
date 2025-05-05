@@ -5,6 +5,7 @@ export default function MapKitMap({ vehicles }) {
     const mapRef = useRef(null);
     const [mapLoaded, setMapLoaded] = useState(false);
     const [token, setToken] = useState(null);
+    const [map, setMap] = useState(null);
 
     // https://developer.apple.com/documentation/mapkitjs/loading-the-latest-version-of-mapkit-js
     const setupMapKitJs = async() => {
@@ -60,7 +61,7 @@ export default function MapKitMap({ vehicles }) {
                 region: region,
             };
 
-            const map = new window.mapkit.Map(mapRef.current, mapOptions);
+            setMap(new window.mapkit.Map(mapRef.current, mapOptions));
 
         }
     }, [mapLoaded]);
