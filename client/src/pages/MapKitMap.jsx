@@ -6,6 +6,7 @@ export default function MapKitMap({ vehicles }) {
     const [mapLoaded, setMapLoaded] = useState(false);
     const [token, setToken] = useState(null);
 
+    // https://developer.apple.com/documentation/mapkitjs/loading-the-latest-version-of-mapkit-js
     const setupMapKitJs = async() => {
         if (!window.mapkit || window.mapkit.loadedLibraries.length === 0) {
             await new Promise(resolve => { window.initMapKit = resolve });
@@ -49,9 +50,14 @@ export default function MapKitMap({ vehicles }) {
     useEffect(() => {
         if (mapLoaded) {
 
+            const center = new window.mapkit.Coordinate(42.7299107, -73.6835165);
+            const span = new window.mapkit.Span(0.1, 0.1);
+            const region = new window.mapkit.Region(center, span);
+
             const mapOptions = {
-                center: new window.mapkit.Coordinate(42.7299107, -73.6835165),
+                center: center,
                 zoomLevel: 10,
+                region: region,
             };
 
             const map = new window.mapkit.Map(mapRef.current, mapOptions);
@@ -59,9 +65,8 @@ export default function MapKitMap({ vehicles }) {
         }
     }, [mapLoaded]);
 
-    /*
     useEffect(() => {
-        if (!mapLoaded || !mapRef.current) return;
+        if (!mapLoaded) return;
         const coordinates = vehicles.map(vehicle => {
             return new window.mapkit.Coordinate(vehicle.lat, vehicle.lng);
         });
@@ -77,12 +82,10 @@ export default function MapKitMap({ vehicles }) {
         map.showItems(coordinates);
         map.addAnnotations(annotations);
     }, [vehicles]);
-        */
-
 
 return (
     <div
-        style={{ width: '100%', height: '100vh' }}
+        style={{ width: '80%', height: '100vh' }}
         ref={mapRef}
     >
     </div>
