@@ -57,7 +57,6 @@ export default function MapKitMap({ vehicles }) {
 
             const mapOptions = {
                 center: center,
-                zoomLevel: 10,
                 region: region,
                 isScrollEnabled: false,
                 isZoomEnabled: false,
@@ -89,7 +88,7 @@ export default function MapKitMap({ vehicles }) {
         // 42.731468785216094, -73.68128223685743
         // 42.731023124913804, -73.67909065365457
 
-        northStops = [
+        const northStops = [
             new window.mapkit.Coordinate(42.730676958536144, -73.67674616623393),
             new window.mapkit.Coordinate(42.737043669212134, -73.67036818086305),
             new window.mapkit.Coordinate(42.735455332919045, -73.6636579612421),
@@ -99,7 +98,7 @@ export default function MapKitMap({ vehicles }) {
             new window.mapkit.Coordinate(42.73175755884203, -73.66967270972104)
         ]
 
-        westStops = [
+        const westStops = [
             new window.mapkit.Coordinate(42.730318398121575, -73.67656636425313),
             new window.mapkit.Coordinate(42.72799822908236, -73.67809671921837),
             new window.mapkit.Coordinate(42.72293385583282, -73.67960937432454),
