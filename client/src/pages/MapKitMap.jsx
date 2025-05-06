@@ -326,7 +326,7 @@ export default function MapKitMap({ vehicles }) {
         ];
 
         northDirectionRequests.forEach((request) => {
-            directions.calculateDirections(request, (error, data) => {
+            directions.route(request, (error, data) => {
                 if (error) {
                     console.error('Error calculating directions:', error);
                     return;
@@ -349,7 +349,7 @@ export default function MapKitMap({ vehicles }) {
         });
 
         westDirectionRequests.forEach((request) => {
-            directions.calculateDirections(request, (error, data) => {
+            directions.route(request, (error, data) => {
                 if (error) {
                     console.error('Error calculating directions:', error);
                     return;
