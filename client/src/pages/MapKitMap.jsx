@@ -55,7 +55,7 @@ export default function MapKitMap({ vehicles }) {
     useEffect(() => {
         if (mapLoaded) {
 
-            const center = new window.mapkit.Coordinate(42.730016326401114, -73.67568961656735);
+            const center = new window.mapkit.Coordinate(42.729516326401114, -73.67568961656735);
             const span = new window.mapkit.CoordinateSpan(0.02, 0.005);
             const region = new window.mapkit.CoordinateRegion(center, span);
 
@@ -71,13 +71,13 @@ export default function MapKitMap({ vehicles }) {
 
             const thisMap = new window.mapkit.Map(mapRef.current, mapOptions);
             thisMap.setCameraZoomRangeAnimated(
-                new window.mapkit.CameraZoomRange(200, 3000),
+                new window.mapkit.CameraZoomRange(600, 3000),
                 false,
             );
             thisMap.setCameraBoundaryAnimated(
                 new window.mapkit.CoordinateRegion(
                     center,
-                    new window.mapkit.CoordinateSpan(0.02, 0.01)
+                    new window.mapkit.CoordinateSpan(0.03, 0.01)
                 ),
                 false,
             );
