@@ -92,39 +92,53 @@ export default function MapKitMap({ vehicles }) {
         const unionCircle = new window.mapkit.CircleOverlay(
             new window.mapkit.Coordinate(42.730676958536144, -73.67674616623393),
             25,
-            { strokeColor: '#000000', lineWidth: 2 }
+            {
+                style: { strokeColor: '#000000', lineWidth: 2 }
+            }
         );
 
         const northCircles = [
             new window.mapkit.CircleOverlay(
                 new window.mapkit.Coordinate(42.737043669212134, -73.67036818086305),
                 25,
-                { strokeColor: '#000000', lineWidth: 2 }
+                {
+                    style: { strokeColor: '#000000', lineWidth: 2 }
+                }
             ),
             new window.mapkit.CircleOverlay(
                 new window.mapkit.Coordinate(42.735455332919045, -73.6636579612421),
                 25,
-                { strokeColor: '#000000', lineWidth: 2 }
+                {
+                    style: { strokeColor: '#000000', lineWidth: 2 }
+                }
             ),
             new window.mapkit.CircleOverlay(
                 new window.mapkit.Coordinate(42.73453830902714, -73.6634349282215),
                 25,
-                { strokeColor: '#000000', lineWidth: 2 }
+                {
+                    style: { strokeColor: '#000000', lineWidth: 2 }
+                }
             ),
             new window.mapkit.CircleOverlay(
                 new window.mapkit.Coordinate(42.7327033365768, -73.66522556880754),
                 25,
-                { strokeColor: '#000000', lineWidth: 2 }
+                {
+                    style: { strokeColor: '#000000', lineWidth: 2 }
+                }
             ),
             new window.mapkit.CircleOverlay(
                 new window.mapkit.Coordinate(42.73080472933945, -73.6673502020617),
                 25,
-                { strokeColor: '#000000', lineWidth: 2 }
+                {
+                    style: { strokeColor: '#000000', lineWidth: 2 }
+                }
             ),
             new window.mapkit.CircleOverlay(
                 new window.mapkit.Coordinate(42.73175755884203, -73.66967270972104),
                 25,
-                { strokeColor: '#000000', lineWidth: 2 }
+                {
+                    style: { strokeColor: '#000000', lineWidth: 2 }
+                }
             )
         ];
 
@@ -132,32 +146,44 @@ export default function MapKitMap({ vehicles }) {
             new window.mapkit.CircleOverlay(
                 new window.mapkit.Coordinate(42.72799822908236, -73.67809671921837),
                 25,
-                { strokeColor: '#000000', lineWidth: 2 }
+                {
+                    style: { strokeColor: '#000000', lineWidth: 2 }
+                }
             ),
             new window.mapkit.CircleOverlay(
                 new window.mapkit.Coordinate(42.72293385583282, -73.67960937432454),
                 25,
-                { strokeColor: '#000000', lineWidth: 2 }
+                {
+                    style: { strokeColor: '#000000', lineWidth: 2 }
+                }
             ),
             new window.mapkit.CircleOverlay(
                 new window.mapkit.Coordinate(42.72766469852938, -73.68716188006067),
                 25,
-                { strokeColor: '#000000', lineWidth: 2 }
+                {
+                    style: { strokeColor: '#000000', lineWidth: 2 }
+                }
             ),
             new window.mapkit.CircleOverlay(
                 new window.mapkit.Coordinate(42.73160170173599, -73.68627833913843),
                 25,
-                { strokeColor: '#000000', lineWidth: 2 }
+                {
+                    style: { strokeColor: '#000000', lineWidth: 2 }
+                }
             ),
             new window.mapkit.CircleOverlay(
                 new window.mapkit.Coordinate(42.731468785216094, -73.68128223685743),
                 25,
-                { strokeColor: '#000000', lineWidth: 2 }
+                {
+                    style: { strokeColor: '#000000', lineWidth: 2 }
+                }
             ),
             new window.mapkit.CircleOverlay(
                 new window.mapkit.Coordinate(42.731023124913804, -73.67909065365457),
                 25,
-                { strokeColor: '#000000', lineWidth: 2 }
+                {
+                    style: { strokeColor: '#000000', lineWidth: 2 }
+                }
             )
         ];
 
