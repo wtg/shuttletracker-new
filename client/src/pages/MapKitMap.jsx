@@ -52,7 +52,7 @@ export default function MapKitMap({ vehicles }) {
     useEffect(() => {
         if (mapLoaded) {
 
-            const center = new window.mapkit.Coordinate(42.729816326401114, -73.67548961656735);
+            const center = new window.mapkit.Coordinate(42.729816326401114, -73.67568961656735);
             const span = new window.mapkit.CoordinateSpan(0.02, 0.005);
             const region = new window.mapkit.CoordinateRegion(center, span);
 
