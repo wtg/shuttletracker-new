@@ -34,7 +34,7 @@ export default function LiveLocation() {
     }, []);
 
     return (
-        <div>
+        <>
             {location && <MapKitMap vehicles={
                 Object.keys(location).map((key) => {
                     const gps = location[key];
@@ -67,6 +67,6 @@ export default function LiveLocation() {
             ) : (
                 <p>Loading...</p>
             )}
-        </div>
+        </>
     )
 }

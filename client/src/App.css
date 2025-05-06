@@ -26,6 +26,7 @@ header {
   margin: 0;
   font-size: 2em;
   font-weight: bold;
+  z-index: 1000;
 }
 
 footer {
