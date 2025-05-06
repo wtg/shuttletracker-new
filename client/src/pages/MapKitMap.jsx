@@ -9,7 +9,7 @@ export default function MapKitMap({ vehicles }) {
     const [map, setMap] = useState(null);
     const [vehicleOverlays, setVehicleOverlays] = useState({});
 
-    // https://developer.apple.com/documentation/mapkitjs/loading-the-latest-version-of-mapkit-js
+    // source: https://developer.apple.com/documentation/mapkitjs/loading-the-latest-version-of-mapkit-js
     const setupMapKitJs = async() => {
         if (!window.mapkit || window.mapkit.loadedLibraries.length === 0) {
             await new Promise(resolve => { window.initMapKit = resolve });
@@ -18,6 +18,7 @@ export default function MapKitMap({ vehicles }) {
     };
 
 
+    // fetch the MapKit token from the server
     useEffect(() => {
         fetch('/api/mapkit')
             .then((response) => {
@@ -50,6 +51,7 @@ export default function MapKitMap({ vehicles }) {
         mapkitScript();
     }, [token]);
 
+    // create the map
     useEffect(() => {
         if (mapLoaded) {
 
@@ -73,8 +75,12 @@ export default function MapKitMap({ vehicles }) {
         }
     }, [mapLoaded]);
 
+    // add fixed details to the map
+    // includes routes and stops
     useEffect(() => {
         if (!map) return;
+
+        // coordinates of stops
 
         // north
         // 42.730676958536144, -73.67674616623393
@@ -94,6 +100,7 @@ export default function MapKitMap({ vehicles }) {
         // 42.731468785216094, -73.68128223685743
         // 42.731023124913804, -73.67909065365457
 
+        // circle overlays for the stops
         const unionCircle = new window.mapkit.CircleOverlay(
             new window.mapkit.Coordinate(42.730676958536144, -73.67674616623393),
             15,
@@ -257,6 +264,8 @@ export default function MapKitMap({ vehicles }) {
             ),
         ];
 
+
+        // directions for the loops
         const directions = new window.mapkit.Directions();
 
         const northDirectionRequests = [
@@ -329,6 +338,8 @@ export default function MapKitMap({ vehicles }) {
             }
         ];
 
+        // add directions to map
+
         northDirectionRequests.forEach((request) => {
             directions.route(request, (error, data) => {
                 if (error) {
@@ -363,11 +374,14 @@ export default function MapKitMap({ vehicles }) {
             });
         });
 
+        // add stops to map
+
         const overlays = [unionCircle, ...northCircles, ...westCircles];
         map.addOverlays(overlays);
 
     }, [map]);
 
+    // display vehicles on map
     useEffect(() => {
         if (!map || !vehicles) return;
 
@@ -380,10 +394,10 @@ export default function MapKitMap({ vehicles }) {
                 color: '#FF0000',
             });
             if (key in vehicleOverlays) {
-                // update coordinate
+                // old vehicle: update coordinate
                 vehicleOverlays[key].coordinate = coordinate;
             } else {
-                // add to map
+                // new vehicle: add to map
                 map.addAnnotation(annotation);
                 vehicleOverlays[key] = annotation;
             }
