@@ -333,17 +333,11 @@ export default function MapKitMap({ vehicles }) {
                 }
                 const route = data.routes[0];
                 console.log(route);
-                const routeOverlay = new window.mapkit.PolylineOverlay(
-                    route.polyline,
-                    {
-                        style: new window.mapkit.Style(
-                            {
-                                strokeColor: '#FF0000',
-                                lineWidth: 2,
-                            }
-                        )
-                    }
-                );
+                const routeOverlay = route.polyline;
+                routeOverlay.style = {
+                    strokeColor: '#FF0000',
+                    lineWidth: 2,
+                }
                 map.addOverlay(routeOverlay);
             });
         });
@@ -356,17 +350,11 @@ export default function MapKitMap({ vehicles }) {
                 }
                 const route = data.routes[0];
                 console.log(route);
-                const routeOverlay = new window.mapkit.PolylineOverlay(
-                    route.polyline,
-                    {
-                        style: new window.mapkit.Style(
-                            {
-                                strokeColor: '#0000FF',
-                                lineWidth: 2,
-                            }
-                        )
-                    }
-                );
+                const routeOverlay = route.polyline;
+                routeOverlay.style = {
+                    strokeColor: '#0000FF',
+                    lineWidth: 2,
+                }
                 map.addOverlay(routeOverlay);
             });
         });
