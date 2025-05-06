@@ -144,13 +144,6 @@ export default function MapKitMap({ vehicles }) {
 
         const westCircles = [
             new window.mapkit.CircleOverlay(
-                new window.mapkit.Coordinate(42.730318398121575, -73.67656636425313),
-                25,
-                new window.mapkit.Style(
-                    { strokeColor: '#FF0000', lineWidth: 2 }
-                )
-            ),
-            new window.mapkit.CircleOverlay(
                 new window.mapkit.Coordinate(42.72799822908236, -73.67809671921837),
                 25,
                 new window.mapkit.Style(
