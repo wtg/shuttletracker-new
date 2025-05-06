@@ -81,7 +81,7 @@ export default function MapKitMap({ vehicles }) {
         // 42.735455332919045, -73.6636579612421
         // 42.73453830902714, -73.6634349282215
         // 42.7327033365768, -73.66522556880754
-        // 42.73080472933945, -73.6673502020617
+        // 42.731383488711145, -73.66654627298861
         // 42.73175755884203, -73.66967270972104
 
         // west
@@ -156,7 +156,7 @@ export default function MapKitMap({ vehicles }) {
                 }
             ),
             new window.mapkit.CircleOverlay(
-                new window.mapkit.Coordinate(42.73080472933945, -73.6673502020617),
+                new window.mapkit.Coordinate(42.731383488711145, -73.66654627298861),
                 15,
                 {
                     style: new window.mapkit.Style(
@@ -256,11 +256,6 @@ export default function MapKitMap({ vehicles }) {
             ),
         ];
 
-        const overlays = [unionCircle, ...northCircles, ...westCircles];
-        overlays.forEach((overlay) => {
-            map.addOverlay(overlay);
-        });
-
         const directions = new window.mapkit.Directions();
 
         const northDirectionRequests = [
@@ -270,6 +265,10 @@ export default function MapKitMap({ vehicles }) {
             },
             {
                 origin: new window.mapkit.Coordinate(42.737043669212134, -73.67036818086305),
+                destination: new window.mapkit.Coordinate(42.737902319942435, -73.66773188495978),
+            },
+            {
+                origin: new window.mapkit.Coordinate(42.737902319942435, -73.66773188495978),
                 destination: new window.mapkit.Coordinate(42.735455332919045, -73.6636579612421),
             },
             {
@@ -305,6 +304,10 @@ export default function MapKitMap({ vehicles }) {
             },
             {
                 origin: new window.mapkit.Coordinate(42.72293385583282, -73.67960937432454),
+                destination: new window.mapkit.Coordinate(442.72779537209815, -73.68848176378644),
+            },
+            {
+                origin: new window.mapkit.Coordinate(42.72779537209815, -73.68848176378644),
                 destination: new window.mapkit.Coordinate(42.72766469852938, -73.68716188006067),
             },
             {
@@ -352,12 +355,18 @@ export default function MapKitMap({ vehicles }) {
                 console.log(route);
                 const routeOverlay = route.polyline;
                 routeOverlay.style = new window.mapkit.Style({
-                    strokeColor: '#FF0000',
+                    strokeColor: '#0000FF',
                     lineWidth: 2,
                 });
                 map.addOverlay(routeOverlay);
             });
         });
+
+        const overlays = [unionCircle, ...northCircles, ...westCircles];
+        overlays.forEach((overlay) => {
+            map.addOverlay(overlay);
+        });
+
     }, [map]);
 
 return (
