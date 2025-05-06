@@ -89,42 +89,71 @@ export default function MapKitMap({ vehicles }) {
         // 42.731468785216094, -73.68128223685743
         // 42.731023124913804, -73.67909065365457
 
-        const northStops = [
-            new window.mapkit.Coordinate(42.730676958536144, -73.67674616623393),
-            new window.mapkit.Coordinate(42.737043669212134, -73.67036818086305),
-            new window.mapkit.Coordinate(42.735455332919045, -73.6636579612421),
-            new window.mapkit.Coordinate(42.73453830902714, -73.6634349282215),
-            new window.mapkit.Coordinate(42.7327033365768, -73.66522556880754),
-            new window.mapkit.Coordinate(42.73080472933945, -73.6673502020617),
-            new window.mapkit.Coordinate(42.73175755884203, -73.66967270972104)
+        const northMarkers = [
+            new window.mapkit.MarkerAnnotation(
+                new window.mapkit.Coordinate(42.730676958536144, -73.67674616623393),
+                { title: 'Union', color: '#FF0000' }
+            ),
+            new window.mapkit.MarkerAnnotation(
+                new window.mapkit.Coordinate(42.737043669212134, -73.67036818086305),
+                { title: 'Colonie', color: '#FF0000' }
+            ),
+            new window.mapkit.MarkerAnnotation(
+                new window.mapkit.Coordinate(42.735455332919045, -73.6636579612421),
+                { title: 'Bryckwyck', color: '#FF0000' }
+            ),
+            new window.mapkit.MarkerAnnotation(
+                new window.mapkit.Coordinate(42.73453830902714, -73.6634349282215),
+                { title: 'Rousseau', color: '#FF0000' }
+            ),
+            new window.mapkit.MarkerAnnotation(
+                new window.mapkit.Coordinate(42.7327033365768, -73.66522556880754),
+                { title: 'Stacwyck', color: '#FF0000' }
+            ),
+            new window.mapkit.MarkerAnnotation(
+                new window.mapkit.Coordinate(42.73080472933945, -73.6673502020617),
+                { title: 'ECAV', color: '#FF0000' }
+            ),
+            new window.mapkit.MarkerAnnotation(
+                new window.mapkit.Coordinate(42.73175755884203, -73.66967270972104),
+                { title: 'Houston FH', color: '#FF0000' }
+            ),
         ]
 
-        const westStops = [
-            new window.mapkit.Coordinate(42.730318398121575, -73.67656636425313),
-            new window.mapkit.Coordinate(42.72799822908236, -73.67809671921837),
-            new window.mapkit.Coordinate(42.72293385583282, -73.67960937432454),
-            new window.mapkit.Coordinate(42.72766469852938, -73.68716188006067),
-            new window.mapkit.Coordinate(42.73160170173599, -73.68627833913843),
-            new window.mapkit.Coordinate(42.731468785216094, -73.68128223685743),
-            new window.mapkit.Coordinate(42.731023124913804, -73.67909065365457)
+        const westMarkers = [
+            new window.mapkit.MarkerAnnotation(
+                new window.mapkit.Coordinate(42.730318398121575, -73.67656636425313),
+                { title: 'Union', color: '#0000FF' }
+            ),
+            new window.mapkit.MarkerAnnotation(
+                new window.mapkit.Coordinate(42.72799822908236, -73.67809671921837),
+                { title: 'Academy', color: '#0000FF' }
+            ),
+            new window.mapkit.MarkerAnnotation(
+                new window.mapkit.Coordinate(42.72293385583282, -73.67960937432454),
+                { title: 'Polytechnic', color: '#0000FF' }
+            ),
+            new window.mapkit.MarkerAnnotation(
+                new window.mapkit.Coordinate(42.72766469852938, -73.68716188006067),
+                { title: 'City Station', color: '#0000FF' }
+            ),
+            new window.mapkit.MarkerAnnotation(
+                new window.mapkit.Coordinate(42.73160170173599, -73.68627833913843),
+                { title: 'Blitman', color: '#0000FF' }
+            ),
+            new window.mapkit.MarkerAnnotation(
+                new window.mapkit.Coordinate(42.731468785216094, -73.68128223685743),
+                { title: 'West', color: '#0000FF' }
+            ),
+            new window.mapkit.MarkerAnnotation(
+                new window.mapkit.Coordinate(42.731023124913804, -73.67909065365457),
+                { title: "'87 Gym", color: '#0000FF' }
+            ),
         ]
 
-        // show markers
-        northStops.map((stop, index) => {
-            const annotation = new window.mapkit.MarkerAnnotation(stop, {
-                title: `North Stop ${index + 1}`,
-                subtitle: 'North',
-                color: '#FF0000',
-            });
-            map.addAnnotation(annotation);
-        });
-        westStops.map((stop, index) => {
-            const annotation = new window.mapkit.MarkerAnnotation(stop, {
-                title: `West Stop ${index + 1}`,
-                subtitle: 'West',
-                color: '#0000FF',
-            });
-            map.addAnnotation(annotation);
+        const allMarkers = [...northMarkers, ...westMarkers];
+        allMarkers.forEach((marker) => {
+            map.addAnnotation(marker);
         });
 
     }, [map]);
