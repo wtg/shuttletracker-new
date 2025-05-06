@@ -77,7 +77,7 @@ export default function MapKitMap({ vehicles }) {
             thisMap.setCameraBoundaryAnimated(
                 new window.mapkit.CoordinateRegion(
                     center,
-                    new window.mapkit.CoordinateSpan(0.025, 0.025)
+                    new window.mapkit.CoordinateSpan(0.02, 0.025)
                 ),
                 false,
             );
