@@ -66,9 +66,10 @@ export default function MapKitMap({ vehicles }) {
                 showsPointsOfInterest: false,
             };
 
-            setMap(new window.mapkit.Map(mapRef.current, mapOptions));
+            const thisMap = new window.mapkit.Map(mapRef.current, mapOptions);
+            thisMap.setCameraBoundaryAnimated(region, false);
 
-            map.setCameraBoundaryAnimated(region, false);
+            setMap(thisMap);
 
         }
     }, [mapLoaded]);
