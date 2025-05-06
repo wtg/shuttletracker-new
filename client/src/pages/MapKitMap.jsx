@@ -97,8 +97,6 @@ export default function MapKitMap({ vehicles }) {
                     {
                         strokeColor: '#000000',
                         lineWidth: 2,
-                        fillColor: '#000000',
-                        fillOpacity: 0.5,
                     }
                 )
             }
@@ -113,8 +111,6 @@ export default function MapKitMap({ vehicles }) {
                         {
                             strokeColor: '#000000',
                             lineWidth: 2,
-                            fillColor: '#000000',
-                            fillOpacity: 0.5,
                         }
                     )
                 }
@@ -127,8 +123,6 @@ export default function MapKitMap({ vehicles }) {
                         {
                             strokeColor: '#000000',
                             lineWidth: 2,
-                            fillColor: '#000000',
-                            fillOpacity: 0.5,
                         }
                     )
                 }
@@ -141,8 +135,6 @@ export default function MapKitMap({ vehicles }) {
                         {
                             strokeColor: '#000000',
                             lineWidth: 2,
-                            fillColor: '#000000',
-                            fillOpacity: 0.5,
                         }
                     )
                 }
@@ -155,8 +147,6 @@ export default function MapKitMap({ vehicles }) {
                         {
                             strokeColor: '#000000',
                             lineWidth: 2,
-                            fillColor: '#000000',
-                            fillOpacity: 0.5,
                         }
                     )
                 }
@@ -169,8 +159,6 @@ export default function MapKitMap({ vehicles }) {
                         {
                             strokeColor: '#000000',
                             lineWidth: 2,
-                            fillColor: '#000000',
-                            fillOpacity: 0.5,
                         }
                     )
                 }
@@ -183,8 +171,6 @@ export default function MapKitMap({ vehicles }) {
                         {
                             strokeColor: '#000000',
                             lineWidth: 2,
-                            fillColor: '#000000',
-                            fillOpacity: 0.5,
                         }
                     )
                 }
@@ -200,8 +186,6 @@ export default function MapKitMap({ vehicles }) {
                         {
                             strokeColor: '#000000',
                             lineWidth: 2,
-                            fillColor: '#000000',
-                            fillOpacity: 0.5,
                         }
                     )
                 }
@@ -214,8 +198,6 @@ export default function MapKitMap({ vehicles }) {
                         {
                             strokeColor: '#000000',
                             lineWidth: 2,
-                            fillColor: '#000000',
-                            fillOpacity: 0.5,
                         }
                     )
                 }
@@ -228,8 +210,6 @@ export default function MapKitMap({ vehicles }) {
                         {
                             strokeColor: '#000000',
                             lineWidth: 2,
-                            fillColor: '#000000',
-                            fillOpacity: 0.5,
                         }
                     )
                 }
@@ -242,8 +222,6 @@ export default function MapKitMap({ vehicles }) {
                         {
                             strokeColor: '#000000',
                             lineWidth: 2,
-                            fillColor: '#000000',
-                            fillOpacity: 0.5,
                         }
                     )
                 }
@@ -256,8 +234,6 @@ export default function MapKitMap({ vehicles }) {
                         {
                             strokeColor: '#000000',
                             lineWidth: 2,
-                            fillColor: '#000000',
-                            fillOpacity: 0.5,
                         }
                     )
                 }
@@ -270,8 +246,6 @@ export default function MapKitMap({ vehicles }) {
                         {
                             strokeColor: '#000000',
                             lineWidth: 2,
-                            fillColor: '#000000',
-                            fillOpacity: 0.5,
                         }
                     )
                 }
