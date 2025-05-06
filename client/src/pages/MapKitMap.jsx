@@ -261,6 +261,115 @@ export default function MapKitMap({ vehicles }) {
             map.addOverlay(overlay);
         });
 
+        const directions = new window.mapkit.Directions();
+
+        const northDirectionRequests = [
+            {
+                origin: new window.mapkit.Coordinate(42.730676958536144, -73.67674616623393),
+                destination: new window.mapkit.Coordinate(42.737043669212134, -73.67036818086305),
+            },
+            {
+                origin: new window.mapkit.Coordinate(42.737043669212134, -73.67036818086305),
+                destination: new window.mapkit.Coordinate(42.735455332919045, -73.6636579612421),
+            },
+            {
+                origin: new window.mapkit.Coordinate(42.735455332919045, -73.6636579612421),
+                destination: new window.mapkit.Coordinate(42.73453830902714, -73.6634349282215),
+            },
+            {
+                origin: new window.mapkit.Coordinate(42.73453830902714, -73.6634349282215),
+                destination: new window.mapkit.Coordinate(42.7327033365768, -73.66522556880754),
+            },
+            {
+                origin: new window.mapkit.Coordinate(42.7327033365768, -73.66522556880754),
+                destination: new window.mapkit.Coordinate(42.73080472933945, -73.6673502020617),
+            },
+            {
+                origin: new window.mapkit.Coordinate(42.73080472933945, -73.6673502020617),
+                destination: new window.mapkit.Coordinate(42.73175755884203, -73.66967270972104),
+            },
+            {
+                origin: new window.mapkit.Coordinate(42.73175755884203, -73.66967270972104),
+                destination: new window.mapkit.Coordinate(42.730676958536144, -73.67674616623393),
+            }
+        ];
+
+        const westDirectionRequests = [
+            {
+                origin: new window.mapkit.Coordinate(42.730676958536144, -73.67674616623393),
+                destination: new window.mapkit.Coordinate(42.72799822908236, -73.67809671921837),
+            },
+            {
+                origin: new window.mapkit.Coordinate(42.72799822908236, -73.67809671921837),
+                destination: new window.mapkit.Coordinate(42.72293385583282, -73.67960937432454),
+            },
+            {
+                origin: new window.mapkit.Coordinate(42.72293385583282, -73.67960937432454),
+                destination: new window.mapkit.Coordinate(42.72766469852938, -73.68716188006067),
+            },
+            {
+                origin: new window.mapkit.Coordinate(42.72766469852938, -73.68716188006067),
+                destination: new window.mapkit.Coordinate(42.73160170173599, -73.68627833913843),
+            },
+            {
+                origin: new window.mapkit.Coordinate(42.73160170173599, -73.68627833913843),
+                destination: new window.mapkit.Coordinate(42.731468785216094, -73.68128223685743),
+            },
+            {
+                origin: new window.mapkit.Coordinate(42.731468785216094, -73.68128223685743),
+                destination: new window.mapkit.Coordinate(42.731023124913804, -73.67909065365457),
+            },
+            {
+                origin: new window.mapkit.Coordinate(42.731023124913804, -73.67909065365457),
+                destination: new window.mapkit.Coordinate(42.730676958536144, -73.67674616623393),
+            }
+        ];
+
+        northDirectionRequests.forEach((request) => {
+            directions.calculateDirections(request, (error, data) => {
+                if (error) {
+                    console.error('Error calculating directions:', error);
+                    return;
+                }
+                const route = data.routes[0];
+                console.log(route);
+                const routeOverlay = new window.mapkit.PolylineOverlay(
+                    route.polyline,
+                    {
+                        style: new window.mapkit.Style(
+                            {
+                                strokeColor: '#FF0000',
+                                lineWidth: 2,
+                            }
+                        )
+                    }
+                );
+                map.addOverlay(routeOverlay);
+            });
+        });
+
+        westDirectionRequests.forEach((request) => {
+            directions.calculateDirections(request, (error, data) => {
+                if (error) {
+                    console.error('Error calculating directions:', error);
+                    return;
+                }
+                const route = data.routes[0];
+                console.log(route);
+                const routeOverlay = new window.mapkit.PolylineOverlay(
+                    route.polyline,
+                    {
+                        style: new window.mapkit.Style(
+                            {
+                                strokeColor: '#0000FF',
+                                lineWidth: 2,
+                            }
+                        )
+                    }
+                );
+                map.addOverlay(routeOverlay);
+            });
+        });
     }, [map]);
 
 return (
