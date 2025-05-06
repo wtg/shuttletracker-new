@@ -7,6 +7,7 @@ export default function MapKitMap({ vehicles }) {
     const [mapLoaded, setMapLoaded] = useState(false);
     const [token, setToken] = useState(null);
     const [map, setMap] = useState(null);
+    const [vehicleOverlays, setVehicleOverlays] = useState({});
 
     // https://developer.apple.com/documentation/mapkitjs/loading-the-latest-version-of-mapkit-js
     const setupMapKitJs = async() => {
@@ -363,11 +364,34 @@ export default function MapKitMap({ vehicles }) {
         });
 
         const overlays = [unionCircle, ...northCircles, ...westCircles];
-        overlays.forEach((overlay) => {
-            map.addOverlay(overlay);
-        });
+        map.addOverlays(overlays);
 
     }, [map]);
+
+    useEffect(() => {
+        if (!map || !vehicles) return;
+
+        Object.keys(vehicles).map((key) => {
+            const vehicle = vehicles[key];
+            const coordinate = new window.mapkit.Coordinate(vehicle.lat, vehicle.lng);
+            const annotation = new window.mapkit.MarkerAnnotation(coordinate, {
+                title: `Vehicle ID: ${key}`,
+                subtitle: `Speed: ${vehicle.speed} mph`,
+                color: '#FF0000',
+            });
+            if (key in vehicleOverlays) {
+                // update coordinate
+                vehicleOverlays[key].coordinate = coordinate;
+            } else {
+                // add to map
+                map.addAnnotation(annotation);
+                vehicleOverlays[key] = annotation;
+            }
+
+            vehicleOverlays[key] = annotation;
+        });
+
+    }, [map, vehicles]);
 
 return (
     <div
