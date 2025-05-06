@@ -68,6 +68,8 @@ export default function MapKitMap({ vehicles }) {
 
             setMap(new window.mapkit.Map(mapRef.current, mapOptions));
 
+            map.cameraBoundary = new window.mapkit.MapCameraBoundary(region);
+
         }
     }, [mapLoaded]);
 
