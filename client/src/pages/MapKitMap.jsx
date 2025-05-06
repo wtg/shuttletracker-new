@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import '../styles/MapKitMap.css';
 
 export default function MapKitMap({ vehicles }) {
 
@@ -130,7 +131,7 @@ export default function MapKitMap({ vehicles }) {
 
 return (
     <div
-        style={{ width: '80%', height: '100vh' }}
+        className='map'
         ref={mapRef}
     >
     </div>

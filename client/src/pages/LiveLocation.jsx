@@ -34,9 +34,7 @@ export default function LiveLocation() {
     }, []);
 
     return (
-        <div
-            style={{ height: '100%', width: '100%' }}
-        >
+        <div>
             {location && <MapKitMap vehicles={
                 Object.keys(location).map((key) => {
                     const gps = location[key];
