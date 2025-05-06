@@ -67,8 +67,6 @@ export default function MapKitMap({ vehicles }) {
             };
 
             const thisMap = new window.mapkit.Map(mapRef.current, mapOptions);
-            thisMap.setCameraBoundaryAnimated(region, false);
-
             setMap(thisMap);
 
         }
