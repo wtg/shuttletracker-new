@@ -71,7 +71,7 @@ export default function MapKitMap({ vehicles }) {
 
             const thisMap = new window.mapkit.Map(mapRef.current, mapOptions);
             thisMap.setCameraZoomRangeAnimated(
-                new window.mapkit.CameraZoomRange(600, 3000),
+                new window.mapkit.CameraZoomRange(200, 3000),
                 false,
             );
             thisMap.setCameraBoundaryAnimated(
