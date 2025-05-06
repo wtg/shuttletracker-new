@@ -3,7 +3,6 @@ import React, {
 } from 'react';
 import { Link } from 'react-router';
 import '../styles/Header.css';
-import { LuMenu } from "react-icons/lu";
 
 export default function Header() {
 
@@ -21,16 +20,7 @@ export default function Header() {
                         SHUBBLE
                     </h1>
                 </div>
-                <button className='menu-button' onClick={toggleMenu}>
-                    <LuMenu className='menu-icon' />
-                </button>
             </div>
-            { isOpen && (
-                <nav className='nav'>
-                    <Link to="/">Live Location</Link>
-                    <Link to="/schedule">Schedule</Link>
-                </nav>
-            )}
         </header>
     );
 }
