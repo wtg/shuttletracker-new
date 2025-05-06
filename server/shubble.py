@@ -15,7 +15,7 @@ app = Flask(
     static_url_path='/'
 )
 
-vehicles = ['281474979957434', '281474993785467']
+vehicles = ['281474993785467']
 latest_locations = {}
 
 def update_locations():

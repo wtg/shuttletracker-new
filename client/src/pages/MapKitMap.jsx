@@ -391,7 +391,7 @@ export default function MapKitMap({ vehicles }) {
             const annotation = new window.mapkit.MarkerAnnotation(coordinate, {
                 title: `Vehicle ID: ${key}`,
                 subtitle: `Speed: ${vehicle.speed} mph`,
-                color: '#FF0000',
+                color: '#444444',
             });
             if (key in vehicleOverlays) {
                 // old vehicle: update coordinate
