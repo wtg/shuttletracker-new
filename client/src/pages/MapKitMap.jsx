@@ -89,11 +89,18 @@ export default function MapKitMap({ vehicles }) {
         // 42.731468785216094, -73.68128223685743
         // 42.731023124913804, -73.67909065365457
 
+        const unionMarker = new window.mapkit.MarkerAnnotation(
+            new window.mapkit.Coordinate(42.730676958536144, -73.67674616623393),
+            { title: 'Union', color: '#666666' }
+        )
+
         const northMarkers = [
+            /*
             new window.mapkit.MarkerAnnotation(
                 new window.mapkit.Coordinate(42.730676958536144, -73.67674616623393),
                 { title: 'Union', color: '#FF0000' }
             ),
+            */
             new window.mapkit.MarkerAnnotation(
                 new window.mapkit.Coordinate(42.737043669212134, -73.67036818086305),
                 { title: 'Colonie', color: '#FF0000' }
@@ -121,10 +128,12 @@ export default function MapKitMap({ vehicles }) {
         ]
 
         const westMarkers = [
+            /*
             new window.mapkit.MarkerAnnotation(
                 new window.mapkit.Coordinate(42.730318398121575, -73.67656636425313),
                 { title: 'Union', color: '#0000FF' }
             ),
+            */
             new window.mapkit.MarkerAnnotation(
                 new window.mapkit.Coordinate(42.72799822908236, -73.67809671921837),
                 { title: 'Academy', color: '#0000FF' }
@@ -151,7 +160,7 @@ export default function MapKitMap({ vehicles }) {
             ),
         ]
 
-        const allMarkers = [...northMarkers, ...westMarkers];
+        const allMarkers = [unionMarker, ...northMarkers, ...westMarkers];
         allMarkers.forEach((marker) => {
             map.addAnnotation(marker);
         });
