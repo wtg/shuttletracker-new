@@ -59,7 +59,7 @@ export default function MapKitMap({ vehicles }) {
             const mapOptions = {
                 center: center,
                 region: region,
-                isScrollEnabled: false,
+                isScrollEnabled: true,
                 isZoomEnabled: true,
                 showsZoomControl: true,
                 isRotationEnabled: false,
