@@ -60,7 +60,8 @@ export default function MapKitMap({ vehicles }) {
                 center: center,
                 region: region,
                 isScrollEnabled: false,
-                isZoomEnabled: false,
+                isZoomEnabled: true,
+                isRotationEnabled: false,
             };
 
             setMap(new window.mapkit.Map(mapRef.current, mapOptions));
