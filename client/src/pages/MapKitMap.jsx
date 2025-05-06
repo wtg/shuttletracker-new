@@ -304,7 +304,7 @@ export default function MapKitMap({ vehicles }) {
             },
             {
                 origin: new window.mapkit.Coordinate(42.72293385583282, -73.67960937432454),
-                destination: new window.mapkit.Coordinate(442.72779537209815, -73.68848176378644),
+                destination: new window.mapkit.Coordinate(42.72779537209815, -73.68848176378644),
             },
             {
                 origin: new window.mapkit.Coordinate(42.72779537209815, -73.68848176378644),
