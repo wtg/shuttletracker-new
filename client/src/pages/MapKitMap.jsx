@@ -92,78 +92,103 @@ export default function MapKitMap({ vehicles }) {
         const unionCircle = new window.mapkit.CircleOverlay(
             new window.mapkit.Coordinate(42.730676958536144, -73.67674616623393),
             100,
-            { color: '#FF0000', fillColor: '#FF0000', lineWidth: 2 }
+            { strokeColor: '#FF0000', fillColor: '#FF0000', lineWidth: 2 }
         );
 
         const northCircles = [
             new window.mapkit.CircleOverlay(
                 new window.mapkit.Coordinate(42.737043669212134, -73.67036818086305),
                 100,
-                { color: '#FF0000', fillColor: '#FF0000', lineWidth: 2 }
+                new window.mapkit.Style(
+                    { strokeColor: '#FF0000', fillColor: '#FF0000', lineWidth: 2 }
+                )
             ),
             new window.mapkit.CircleOverlay(
                 new window.mapkit.Coordinate(42.735455332919045, -73.6636579612421),
                 100,
-                { color: '#FF0000', fillColor: '#FF0000', lineWidth: 2 }
+                new window.mapkit.Style(
+                    { strokeColor: '#FF0000', fillColor: '#FF0000', lineWidth: 2 }
+                )
             ),
             new window.mapkit.CircleOverlay(
                 new window.mapkit.Coordinate(42.73453830902714, -73.6634349282215),
                 100,
-                { color: '#FF0000', fillColor: '#FF0000', lineWidth: 2 }
+                new window.mapkit.Style(
+                    { strokeColor: '#FF0000', fillColor: '#FF0000', lineWidth: 2 }
+                )
             ),
             new window.mapkit.CircleOverlay(
                 new window.mapkit.Coordinate(42.7327033365768, -73.66522556880754),
                 100,
-                { color: '#FF0000', fillColor: '#FF0000', lineWidth: 2 }
+                new window.mapkit.Style(
+                    { strokeColor: '#FF0000', fillColor: '#FF0000', lineWidth: 2 }
+                )
             ),
             new window.mapkit.CircleOverlay(
                 new window.mapkit.Coordinate(42.73080472933945, -73.6673502020617),
                 100,
-                { color: '#FF0000', fillColor: '#FF0000', lineWidth: 2 }
+                new window.mapkit.Style(
+                    { strokeColor: '#FF0000', fillColor: '#FF0000', lineWidth: 2 }
+                )
             ),
             new window.mapkit.CircleOverlay(
                 new window.mapkit.Coordinate(42.73175755884203, -73.66967270972104),
                 100,
-                { color: '#FF0000', fillColor: '#FF0000', lineWidth: 2 }
-            ),
+                new window.mapkit.Style(
+                    { strokeColor: '#FF0000', fillColor: '#FF0000', lineWidth: 2 }
+                )
+            )
         ];
 
         const westCircles = [
             new window.mapkit.CircleOverlay(
                 new window.mapkit.Coordinate(42.72799822908236, -73.67809671921837),
                 100,
-                { color: '#0000FF', fillColor: '#0000FF', lineWidth: 2 }
+                new window.mapkit.Style(
+                    { strokeColor: '#FF0000', fillColor: '#FF0000', lineWidth: 2 }
+                )
             ),
             new window.mapkit.CircleOverlay(
                 new window.mapkit.Coordinate(42.72293385583282, -73.67960937432454),
                 100,
-                { color: '#0000FF', fillColor: '#0000FF', lineWidth: 2 }
+                new window.mapkit.Style(
+                    { strokeColor: '#FF0000', fillColor: '#FF0000', lineWidth: 2 }
+                )
             ),
             new window.mapkit.CircleOverlay(
                 new window.mapkit.Coordinate(42.72766469852938, -73.68716188006067),
                 100,
-                { color: '#0000FF', fillColor: '#0000FF', lineWidth: 2 }
+                new window.mapkit.Style(
+                    { strokeColor: '#FF0000', fillColor: '#FF0000', lineWidth: 2 }
+                )
             ),
             new window.mapkit.CircleOverlay(
                 new window.mapkit.Coordinate(42.73160170173599, -73.68627833913843),
                 100,
-                { color: '#0000FF', fillColor: '#0000FF', lineWidth: 2 }
+                new window.mapkit.Style(
+                    { strokeColor: '#FF0000', fillColor: '#FF0000', lineWidth: 2 }
+                )
             ),
             new window.mapkit.CircleOverlay(
                 new window.mapkit.Coordinate(42.731468785216094, -73.68128223685743),
                 100,
-                { color: '#0000FF', fillColor: '#0000FF', lineWidth: 2 }
+                new window.mapkit.Style(
+                    { strokeColor: '#FF0000', fillColor: '#FF0000', lineWidth: 2 }
+                )
             ),
             new window.mapkit.CircleOverlay(
                 new window.mapkit.Coordinate(42.731023124913804, -73.67909065365457),
                 100,
-                { color: '#0000FF', fillColor: '#0000FF', lineWidth: 2 }
-            ),
+                new window.mapkit.Style(
+                    { strokeColor: '#FF0000', fillColor: '#FF0000', lineWidth: 2 }
+                )
+            )
         ];
 
         const overlays = [unionCircle, ...northCircles, ...westCircles];
-        const overlayGroup = new window.mapkit.OverlayGroup(overlays);
-        map.addOverlay(overlayGroup);
+        overlays.forEach((overlay) => {
+            map.addOverlay(overlay);
+        });
 
     }, [map]);
 
