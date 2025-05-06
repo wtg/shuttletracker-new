@@ -70,6 +70,18 @@ export default function MapKitMap({ vehicles }) {
             };
 
             const thisMap = new window.mapkit.Map(mapRef.current, mapOptions);
+            thisMap.setCameraZoomRangeAnimated(
+                new window.mapkit.CameraZoomRange(200, 5000),
+                false,
+            );
+            thisMap.setCameraBoundaryAnimated(
+                new window.mapkit.CoordinateRegion(
+                    center,
+                    new window.mapkit.CoordinateSpan(0.025, 0.025)
+                ),
+                false,
+            );
+            thisMap.setCameraDistanceAnimated(2000);
             setMap(thisMap);
 
         }
