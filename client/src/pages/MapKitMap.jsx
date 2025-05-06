@@ -61,7 +61,9 @@ export default function MapKitMap({ vehicles }) {
                 region: region,
                 isScrollEnabled: false,
                 isZoomEnabled: true,
+                showsZoomControl: true,
                 isRotationEnabled: false,
+                showsPointsOfInterest: false,
             };
 
             setMap(new window.mapkit.Map(mapRef.current, mapOptions));
