@@ -68,7 +68,7 @@ export default function MapKitMap({ vehicles }) {
     }, [mapLoaded]);
 
     useEffect(() => {
-        if (!mapLoaded) return;
+        if (!map) return;
 
         // north
         // 42.730676958536144, -73.67674616623393
@@ -126,7 +126,7 @@ export default function MapKitMap({ vehicles }) {
             map.addAnnotation(annotation);
         });
 
-    }, [vehicles]);
+    }, [map]);
 
 return (
     <div
