@@ -1,8 +1,8 @@
-.git-copy {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    align-items: center;
-    width: 100%;
-    padding: 0 20px;
+.word-rotator {
+    color: #206ef9;
+    font-weight: bold;
+}
+
+.about {
+    font-size: 1.2rem;
 }
