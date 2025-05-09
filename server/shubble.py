@@ -80,6 +80,7 @@ scheduler = BackgroundScheduler()
 
 @app.route('/')
 @app.route('/schedule')
+@app.route('/about')
 def serve_react():
     root_dir = Path(app.static_folder)
     return send_from_directory(root_dir, 'index.html')

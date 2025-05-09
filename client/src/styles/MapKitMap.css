@@ -3,6 +3,7 @@
     height: 500px;
     touch-action: manipulation;
     -webkit-overflow-scrolling: touch;
+    background-color: #f0f0f0;
 }
 
 @media (max-width: 768px) {
