@@ -160,7 +160,7 @@ def webhook():
             return {'status': 'error', 'message': 'Unknown event type'}, 400
 
     except Exception as e:
-        print(e)
+        app.logger.error(f'Error processing webhook: {e}')
         return {'status': 'error', 'message': 'error processing'}, 400
     return {'status': 'success'}, 200
 
