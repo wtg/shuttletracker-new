@@ -45,57 +45,62 @@ def update_locations():
 
     try:
         app.logger.error(after_token)
-        response = requests.get(url, headers=headers, params=url_params)
-        if response.status_code == 200:
-            data = response.json()
-            pagination = data.get('pagination', None)
-            if not pagination:
-                app.logger.error('Invalid pagination')
-                return
-            new_after_token = pagination.get('endCursor', None)
-            if not new_after_token:
-                app.logger.error('Invalid after token')
-                app.logger.error(data)
-                return
-            after_token = new_after_token
-            api_data = data.get('data', None)
-            if api_data is None:
-                app.logger.error('Invalid data')
-                app.logger.error(data)
-                return
-            for vehicle in api_data:
-                vehicle_id = vehicle.get('id', None)
-                if not vehicle_id:
-                    app.logger.error('Invalid vehicle ID')
-                    app.logger.error(vehicle)
-                    continue
-                gps_data_list = vehicle.get('gps', None)
-                if gps_data_list == []:
-                    # no GPS data since last update
-                    continue
-                if gps_data_list is None:
-                    app.logger.error('Invalid GPS data list')
-                    app.logger.error(vehicle)
-                    continue
-                gps_data = gps_data_list[0]
-                if not gps_data:
-                    app.logger.error('Invalid GPS data')
-                    app.logger.error(vehicle)
-                    continue
-                if vehicle_id not in vehicles:
-                    app.logger.warning(f'Vehicle {vehicle_id} not in geofence list')
-                    continue
-                latest_locations[vehicle_id] = {
-                    'lat': gps_data.get('latitude', None),
-                    'lng': gps_data.get('longitude', None),
-                    'timestamp': gps_data.get('time', None),
-                    'speed': gps_data.get('speedMilesPerHour', None),
-                    'heading': gps_data.get('headingDegrees', None),
-                    'address': gps_data.get('reverseGeo', {}).get('formattedLocation', ''),
-                }
-            app.logger.info(f'Updated locations: {latest_locations}')
-        else:
-            app.logger.error(f'Error fetching locations: {response.status_code} {response.text}')
+        has_next_page = True
+        while has_next_page:
+            has_next_page = False
+            response = requests.get(url, headers=headers, params=url_params)
+            if response.status_code == 200:
+                data = response.json()
+                pagination = data.get('pagination', None)
+                if not pagination:
+                    app.logger.error('Invalid pagination')
+                    return
+                if pagination.get('hasNextPage', False):
+                    has_next_page = True
+                new_after_token = pagination.get('endCursor', None)
+                if not new_after_token:
+                    app.logger.error('Invalid after token')
+                    app.logger.error(data)
+                    return
+                after_token = new_after_token
+                api_data = data.get('data', None)
+                if api_data is None:
+                    app.logger.error('Invalid data')
+                    app.logger.error(data)
+                    return
+                for vehicle in api_data:
+                    vehicle_id = vehicle.get('id', None)
+                    if not vehicle_id:
+                        app.logger.error('Invalid vehicle ID')
+                        app.logger.error(vehicle)
+                        continue
+                    gps_data_list = vehicle.get('gps', None)
+                    if gps_data_list == []:
+                        # no GPS data since last update
+                        continue
+                    if gps_data_list is None:
+                        app.logger.error('Invalid GPS data list')
+                        app.logger.error(vehicle)
+                        continue
+                    gps_data = gps_data_list[0]
+                    if not gps_data:
+                        app.logger.error('Invalid GPS data')
+                        app.logger.error(vehicle)
+                        continue
+                    if vehicle_id not in vehicles:
+                        app.logger.warning(f'Vehicle {vehicle_id} not in geofence list')
+                        continue
+                    latest_locations[vehicle_id] = {
+                        'lat': gps_data.get('latitude', None),
+                        'lng': gps_data.get('longitude', None),
+                        'timestamp': gps_data.get('time', None),
+                        'speed': gps_data.get('speedMilesPerHour', None),
+                        'heading': gps_data.get('headingDegrees', None),
+                        'address': gps_data.get('reverseGeo', {}).get('formattedLocation', ''),
+                    }
+                app.logger.info(f'Updated locations: {latest_locations}')
+            else:
+                app.logger.error(f'Error fetching locations: {response.status_code} {response.text}')
     except requests.RequestException as e:
         app.logger.error(f'Error fetching locations: {e}')
 
@@ -130,14 +135,17 @@ def webhook():
         event_data = data.get('data', None)
         if not event_data:
             app.logger.error('Invalid data')
+            app.logger.error(data)
             return {'status': 'error', 'message': 'Invalid data'}, 400
         event_vehicle = event_data.get('vehicle', None)
         if not event_vehicle:
             app.logger.error('Invalid vehicle')
+            app.logger.error(event_data)
             return {'status': 'error', 'message': 'Invalid vehicle'}, 400
         event_vehicle_id = event_vehicle.get('id', None)
         if not event_vehicle_id:
             app.logger.error('Invalid vehicle ID')
+            app.logger.error(event_vehicle)
             return {'status': 'error', 'message': 'Invalid vehicle ID'}, 400
 
         event_type = data.get('eventType', None)
