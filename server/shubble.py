@@ -48,7 +48,7 @@ def update_locations():
         if response.status_code == 200:
             data = response.json()
             api_data = data.get('data', None)
-            if not api_data:
+            if api_data is None:
                 app.logger.error('Invalid data')
                 app.logger.error(data)
                 return
