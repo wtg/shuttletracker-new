@@ -416,8 +416,6 @@ export default function MapKitMap({ vehicles }) {
                 map.addAnnotation(annotation);
                 vehicleOverlays[key] = annotation;
             }
-
-            vehicleOverlays[key] = annotation;
         });
 
     }, [map, vehicles]);
