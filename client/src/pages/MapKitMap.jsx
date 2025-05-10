@@ -7,7 +7,7 @@ export default function MapKitMap({ vehicles }) {
     const [mapLoaded, setMapLoaded] = useState(false);
     const [token, setToken] = useState(null);
     const [map, setMap] = useState(null);
-    const [vehicleOverlays, setVehicleOverlays] = useState({});
+    const vehicleOverlays = {};
 
     // source: https://developer.apple.com/documentation/mapkitjs/loading-the-latest-version-of-mapkit-js
     const setupMapKitJs = async() => {
@@ -363,7 +363,6 @@ export default function MapKitMap({ vehicles }) {
                     return;
                 }
                 const route = data.routes[0];
-                console.log(route);
                 const routeOverlay = route.polyline;
                 routeOverlay.style = new window.mapkit.Style({
                     strokeColor: '#FF0000',
@@ -380,7 +379,6 @@ export default function MapKitMap({ vehicles }) {
                     return;
                 }
                 const route = data.routes[0];
-                console.log(route);
                 const routeOverlay = route.polyline;
                 routeOverlay.style = new window.mapkit.Style({
                     strokeColor: '#0000FF',

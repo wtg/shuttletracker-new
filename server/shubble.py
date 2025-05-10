@@ -22,6 +22,8 @@ after_token = None
 def update_locations():
     global latest_locations
     global vehicles
+    global after_token
+
     if not vehicles:
         app.logger.info('No vehicles to update')
         return
