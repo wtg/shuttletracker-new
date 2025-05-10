@@ -43,23 +43,27 @@ def update_locations():
         url_params['after'] = after_token
     url = 'https://api.samsara.com/fleet/vehicles/stats/feed'
 
+    app.logger.error(f'Fetching locations for vehicles: {vehicles}')
+    app.logger.error(f'URL: {url}')
+
     try:
         response = requests.get(url, headers=headers, params=url_params)
         if response.status_code == 200:
             data = response.json()
-            api_data = data.get('data', None)
-            if api_data is None:
-                app.logger.error('Invalid data')
-                app.logger.error(data)
-                return
             pagination = data.get('pagination', None)
             if not pagination:
                 app.logger.error('Invalid pagination')
                 app.logger.error(data)
                 return
-            after_token = pagination.get('endCursor', None)
+            new_after_token = pagination.get('endCursor', None)
             if not after_token:
                 app.logger.error('Invalid after token')
+                app.logger.error(data)
+                return
+            after_token = new_after_token
+            api_data = data.get('data', None)
+            if api_data is None:
+                app.logger.error('Invalid data')
                 app.logger.error(data)
                 return
             for vehicle in api_data:
