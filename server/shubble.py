@@ -56,7 +56,7 @@ def update_locations():
                 app.logger.error(data)
                 return
             new_after_token = pagination.get('endCursor', None)
-            if not after_token:
+            if not new_after_token:
                 app.logger.error('Invalid after token')
                 app.logger.error(data)
                 return
