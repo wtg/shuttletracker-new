@@ -71,7 +71,7 @@ def update_locations():
                 gps_data_list = vehicle.get('gps', None)
                 if gps_data_list == []:
                     # no GPS data since last update
-                    return
+                    continue
                 if gps_data_list is None:
                     app.logger.error('Invalid GPS data list')
                     app.logger.error(vehicle)
@@ -117,8 +117,10 @@ def get_locations():
 def webhook():
     global vehicles
     global latest_locations
-    data = request.json
+    data = request.data
     if not data:
+        app.logger.error('Invalid JSON')
+        app.logger.error(request.data)
         return {'status': 'error', 'message': 'Invalid JSON'}, 400
     try:
         # extract the data
