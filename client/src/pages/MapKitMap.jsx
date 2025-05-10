@@ -401,13 +401,14 @@ export default function MapKitMap({ vehicles }) {
 
         Object.keys(vehicles).map((key) => {
             const vehicle = vehicles[key];
-            console.log(`Vehicle ${key}:`, vehicle);
             const coordinate = new window.mapkit.Coordinate(vehicle.lat, vehicle.lng);
             if (key in vehicleOverlays) {
                 // old vehicle: update coordinate
+                console.log(`Updating vehicle ${key} to ${vehicle.lat}, ${vehicle.lng}`);
                 vehicleOverlays[key].coordinate = coordinate;
             } else {
                 // new vehicle: add to map
+                console.log(`Adding vehicle ${key} to ${vehicle.lat}, ${vehicle.lng}`);
                 const annotation = new window.mapkit.MarkerAnnotation(coordinate, {
                     title: `Vehicle ID: ${key}`,
                     subtitle: `Speed: ${vehicle.speed} mph`,
