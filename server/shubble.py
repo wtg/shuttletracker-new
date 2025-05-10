@@ -15,8 +15,9 @@ app = Flask(
     static_url_path='/'
 )
 
-vehicles = ['281474993785467']
+vehicles = ['281474984821248']
 latest_locations = {}
+after_token = None
 
 def update_locations():
     global latest_locations
@@ -36,6 +37,8 @@ def update_locations():
         'vehicleIds': ','.join(vehicles),
         'types': 'gps',
     }
+    if after_token:
+        url_params['after'] = after_token
     url = 'https://api.samsara.com/fleet/vehicles/stats/feed'
 
     try:
@@ -47,13 +50,23 @@ def update_locations():
                 app.logger.error('Invalid data')
                 app.logger.error(data)
                 return
+            pagination = data.get('pagination', None)
+            if not pagination:
+                app.logger.error('Invalid pagination')
+                app.logger.error(data)
+                return
+            after_token = pagination.get('endCursor', None)
+            if not after_token:
+                app.logger.error('Invalid after token')
+                app.logger.error(data)
+                return
             for vehicle in api_data:
                 vehicle_id = vehicle.get('id', None)
                 if not vehicle_id:
                     app.logger.error('Invalid vehicle ID')
                     app.logger.error(vehicle)
                     continue
-                gps_data = vehicle.get('gps', [None])[0]
+                gps_data = vehicle.get('gps', [None])[-1]
                 if not gps_data:
                     app.logger.error('Invalid GPS data')
                     app.logger.error(vehicle)
