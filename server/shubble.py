@@ -117,10 +117,10 @@ def get_locations():
 def webhook():
     global vehicles
     global latest_locations
-    data = request.data
+    data = request.json
     if not data:
         app.logger.error('Invalid JSON')
-        app.logger.error(request.data)
+        app.logger.error(request.json)
         return {'status': 'error', 'message': 'Invalid JSON'}, 400
     try:
         # extract the data
