@@ -66,7 +66,15 @@ def update_locations():
                     app.logger.error('Invalid vehicle ID')
                     app.logger.error(vehicle)
                     continue
-                gps_data = vehicle.get('gps', [None])[-1]
+                gps_data_list = vehicle.get('gps', None)
+                if gps_data_list == []:
+                    # no GPS data since last update
+                    return
+                if gps_data_list is None:
+                    app.logger.error('Invalid GPS data list')
+                    app.logger.error(vehicle)
+                    continue
+                gps_data = gps_data_list[0]
                 if not gps_data:
                     app.logger.error('Invalid GPS data')
                     app.logger.error(vehicle)
