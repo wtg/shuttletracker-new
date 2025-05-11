@@ -44,11 +44,12 @@ def update_locations():
     url = 'https://api.samsara.com/fleet/vehicles/stats/feed'
 
     try:
-        app.logger.error(after_token)
         has_next_page = True
         while has_next_page:
             has_next_page = False
             response = requests.get(url, headers=headers, params=url_params)
+            app.logger.error(url_params)
+            app.logger.error(response)
             if response.status_code == 200:
                 data = response.json()
                 pagination = data.get('pagination', None)
