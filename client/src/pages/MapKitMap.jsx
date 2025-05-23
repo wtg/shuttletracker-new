@@ -364,6 +364,7 @@ export default function MapKitMap({ vehicles }) {
                 }
                 const route = data.routes[0];
                 const routeOverlay = route.polyline;
+                console.log(routeOverlay);
                 routeOverlay.style = new window.mapkit.Style({
                     strokeColor: '#FF0000',
                     lineWidth: 2,
@@ -380,6 +381,7 @@ export default function MapKitMap({ vehicles }) {
                 }
                 const route = data.routes[0];
                 const routeOverlay = route.polyline;
+                console.log(routeOverlay);
                 routeOverlay.style = new window.mapkit.Style({
                     strokeColor: '#0000FF',
                     lineWidth: 2,

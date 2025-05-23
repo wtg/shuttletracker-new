@@ -15,7 +15,7 @@ app = Flask(
     static_url_path='/'
 )
 
-vehicles = ['281474984821248']
+vehicles = []
 latest_locations = {}
 after_token = None
 
