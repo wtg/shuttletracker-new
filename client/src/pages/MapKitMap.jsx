@@ -298,11 +298,11 @@ export default function MapKitMap({ vehicles }) {
                 destination: new window.mapkit.Coordinate(42.736332119185015, -73.66693506284926),
             },*/
             {
-                origin: new window.mapkit.Coordinate(42.736332119185015, -73.66693506284926),/*
+                origin: new window.mapkit.Coordinate(42.736332119185015, -73.66693506284926),
                 destination: new window.mapkit.Coordinate(42.735805363425634, -73.66618733238738),
             },
             {
-                origin: new window.mapkit.Coordinate(42.735805363425634, -73.66618733238738),
+                origin: new window.mapkit.Coordinate(42.735805363425634, -73.66618733238738),/*
                 destination: new window.mapkit.Coordinate(42.73564444538299, -73.66519020314206),
             },
             {
