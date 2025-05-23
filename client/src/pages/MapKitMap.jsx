@@ -291,10 +291,10 @@ export default function MapKitMap({ vehicles }) {
             },
             {
                 origin: new window.mapkit.Coordinate(42.737902319942435, -73.66773188495978),
-                destination: new window.mapkit.Coordinate(42.736774180277614, -73.6668878876634),
+                destination: new window.mapkit.Coordinate(442.735805363425634, -73.66618733238738),
             },
             {
-                origin: new window.mapkit.Coordinate(42.736774180277614, -73.6668878876634),
+                origin: new window.mapkit.Coordinate(42.735805363425634, -73.66618733238738),
                 destination: new window.mapkit.Coordinate(42.735455332919045, -73.6636579612421),
             },
             {
