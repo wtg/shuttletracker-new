@@ -17,10 +17,12 @@ app = Flask(
 
 vehicles = []
 latest_locations = {}
+locations_changed = False
 after_token = None
 
 def update_locations():
     global latest_locations
+    global locations_changed
     global vehicles
     global after_token
 
@@ -39,7 +41,7 @@ def update_locations():
         'vehicleIds': ','.join(vehicles),
         'types': 'gps',
     }
-    if after_token:
+    if after_token and not locations_changed:
         url_params['after'] = after_token
     url = 'https://api.samsara.com/fleet/vehicles/stats/feed'
 
