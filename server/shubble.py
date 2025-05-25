@@ -17,12 +17,10 @@ app = Flask(
 
 vehicles = []
 latest_locations = {}
-locations_changed = False
 after_token = None
 
 def update_locations():
     global latest_locations
-    global locations_changed
     global vehicles
     global after_token
 
@@ -41,7 +39,7 @@ def update_locations():
         'vehicleIds': ','.join(vehicles),
         'types': 'gps',
     }
-    if after_token and not locations_changed:
+    if after_token:
         url_params['after'] = after_token
     url = 'https://api.samsara.com/fleet/vehicles/stats/feed'
 
@@ -125,6 +123,7 @@ def get_locations():
 @app.route('/api/webhook', methods=['POST'])
 def webhook():
     global vehicles
+    global after_token
     global latest_locations
     data = request.json
     if not data:
@@ -160,6 +159,7 @@ def webhook():
         if event_type == 'GeofenceEntry':
             app.logger.info(f'Geofence entry event for vehicle {event_vehicle_id}')
             vehicles.append(event_vehicle_id)
+            after_token = None
         elif event_type == 'GeofenceExit':
             app.logger.info(f'Geofence exit event for vehicle {event_vehicle_id}')
             if event_vehicle_id in vehicles:
