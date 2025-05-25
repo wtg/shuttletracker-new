@@ -7,7 +7,7 @@ export default function MapKitMap({ vehicles }) {
     const [mapLoaded, setMapLoaded] = useState(false);
     const [token, setToken] = useState(null);
     const [map, setMap] = useState(null);
-    const [vehicleOverlays, setVehicleOverlays] = useState({});
+    const vehicleOverlays = useRef({});
 
     // source: https://developer.apple.com/documentation/mapkitjs/loading-the-latest-version-of-mapkit-js
     const setupMapKitJs = async() => {
@@ -411,13 +411,7 @@ export default function MapKitMap({ vehicles }) {
             if (key in vehicleOverlays) {
                 // old vehicle: update coordinate
                 console.log(`Updating vehicle ${key} to ${vehicle.lat}, ${vehicle.lng}`);
-                setVehicleOverlays(prevOverlays => ({
-                    ...prevOverlays,
-                    [key]: {
-                        ...prevOverlays[key],
-                        coordinate: coordinate,
-                    }
-                }));
+                vehicleOverlays[key].coordinate = coordinate;
             } else {
                 // new vehicle: add to map
                 console.log(`Adding vehicle ${key} to ${vehicle.lat}, ${vehicle.lng}`);
@@ -427,10 +421,7 @@ export default function MapKitMap({ vehicles }) {
                     color: '#444444',
                 });
                 map.addAnnotation(annotation);
-                setVehicleOverlays(prevOverlays => ({
-                    ...prevOverlays,
-                    [key]: annotation
-                }));
+                vehicleOverlays[key] = annotation;
             }
         });
 
